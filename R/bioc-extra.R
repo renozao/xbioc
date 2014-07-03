@@ -147,13 +147,3 @@ droplevels.ExpressionSet <- function(x, ...){
     x
 }
 
-#' Generic Bioconductor Utilities
-#' 
-#' \code{isExpressionSet} tells if an object inherits from the class \code{\link[Biobase]{ExpressionSet}}.
-#' 
-#' @param x object 
-#' @export
-isExpressionSet <- function(x){
-    is(x, 'ExpressionSet')
-}
-
