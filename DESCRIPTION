@@ -1,0 +1,21 @@
+Package: xbioc
+Type: Package
+Title: Extra Base Functions for Bioconductor
+Version: 0.1
+Date: 2014-07-03
+Authors@R: person("Renaud", "Gaujoux", role=c('aut', 'cre'),
+    email='renaud@tx.technion.ac.il')
+Description: Provides extra utility functions to perform common tasks in
+    the analysis of omic data, leveraging and enhancing features provided
+    by Bioconductor packages.
+License: GPL (>= 3)
+Depends:
+    R (>= 3.1),
+    Biobase
+Collate:
+    'AllClasses.R'
+    'AllGenerics.R'
+    'annotations.R'
+    'bioc-extra.R'
+    'db-packages.R'
+    'platforms.R'

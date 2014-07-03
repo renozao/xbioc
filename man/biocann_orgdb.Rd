@@ -1,0 +1,40 @@
+\name{biocann_orgdb}
+\alias{biocann_orgdb}
+\title{Bioconductor Organism Data and Packages}
+\usage{
+  biocann_orgdb(organism)
+}
+\arguments{
+  \item{organism}{Organism name (case insensitive). Can be
+  specified using the common name (e.g., rat), a partial
+  match of the latin name (e.g., Mus [musculus]), or its
+  abbreviation (e.g., Mm).
+
+  The following organisms are currently supported:
+
+  human, arabidopsis, bovine, canine, chicken, chimp,
+  malaria, mouse, pig, rat, rhesus, worm, zebrafish}
+}
+\description{
+  Bioconductor Organism Data and Packages
+}
+\examples{
+\dontshow{# roxygen generated flag
+options(R_CHECK_RUNNING_EXAMPLES_=TRUE)
+}
+
+# list all
+biocann_orgdb()
+
+# common name
+biocann_orgdb('human')
+
+# latin name
+biocann_orgdb('canis')
+# any partial match works
+biocann_orgdb('canis lupus')
+
+# abbreviation
+biocann_orgdb('Mm')
+}
+
