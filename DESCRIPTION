@@ -24,7 +24,7 @@ Collate:
     'AllClasses.R'
     'AllGenerics.R'
     'annotations.R'
-    'bioc-extra.R'
     'db-packages.R'
     'platforms.R'
     'utils.R'
+    'operations.R'
