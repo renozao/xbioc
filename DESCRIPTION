@@ -29,3 +29,4 @@ Collate:
     'platforms.R'
     'utils.R'
     'operations.R'
+    'package.R'
