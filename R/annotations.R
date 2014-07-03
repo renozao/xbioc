@@ -20,16 +20,16 @@ hasAnnotation <- function(object, ...){
 }
 #' \code{getAnnotation} try extracting embedded annotations.
 #' By default, it returns \code{NULL} if the object contains no annotation.
-#' 
-#' @param null logical that indicates if an empty character string should 
-#' be return as \code{NULL}.
-#' 
+#'
 #' @rdname annotation-utils
 #' @export
 getAnnotation <- function(object, ...){
     UseMethod('getAnnotation')
 }
 
+#' @param null logical that indicates if an empty character string should 
+#' be return as \code{NULL}.
+#' @rdname annotation-utils
 #' @S3method getAnnotation default 
 getAnnotation.default <- function(object, ..., null=TRUE){
     ann <- if( hasMethod('annotation', class(object)) ) annotation(object)
@@ -54,8 +54,16 @@ setAnnotation <- function(object, value, ...){
     UseMethod('setAnnotation')
 }
 
+#' @param as.attribute logical that indicates that the annotation string can be
+#' stored as an attribute, if no suitable \code{`annotation <-`} method is found.
+#'  
+#' @rdname annotation-utils
 #' @S3method setAnnotation default
-setAnnotation.default <- function(object, value, as.attribute = TRUE){
+setAnnotation.default <- function(object, value, as.attribute = TRUE, ...){
+    
+    if( length(extras <- list(...)) ) 
+        stop("Unused arguments ", str_out(sapply(extras, class), Inf, use.names = TRUE))
+    
     # pre-process
     if( is.null(value) ) value <- ''
     else if( length(value) > 1L ) value <- .glue_anndb(value)
@@ -63,6 +71,7 @@ setAnnotation.default <- function(object, value, as.attribute = TRUE){
     # set annotation
     if( hasMethod('annotation<-', c(class(object), class(value))) ) annotation(object) <- value
     else if( as.attribute ) attr(object, 'annotation') <- value
+    else stop("Could not set annotation string: no suitable method `annotation <-` found for signature (", class(object), ",", class(value), ")")
     
     # return modified object
     object
@@ -98,9 +107,7 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
     NextMethod()
 }
 
-
-
-#' @importFrom AnnotationDbi mget
+# #' @importFrom AnnotationDbi mget
 geneInfo <- function(x, organism = 'human'){
     
     db <- .bioc_db0SpeciesMap(organism)

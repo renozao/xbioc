@@ -1,14 +1,22 @@
 \name{hasAnnotation}
 \alias{getAnnotation}
+\alias{getAnnotation.default}
 \alias{hasAnnotation}
 \alias{setAnnotation}
+\alias{setAnnotation.default}
 \title{Handling Object Annotations}
 \usage{
   hasAnnotation(object, ...)
 
   getAnnotation(object, ...)
 
+  \method{getAnnotation}{default} (object, ...,
+    null = TRUE)
+
   setAnnotation(object, value, ...)
+
+  \method{setAnnotation}{default} (object, value,
+    as.attribute = TRUE, ...)
 }
 \arguments{
   \item{object}{an object}
@@ -20,6 +28,10 @@
 
   \item{value}{new annotation string, e.g.,
   \code{'hgu133plu2.db'}.}
+
+  \item{as.attribute}{logical that indicates that the
+  annotation string can be stored as an attribute, if no
+  suitable \code{`annotation <-`} method is found.}
 }
 \description{
   \code{hasAnnotation} tells if an object has some -- non

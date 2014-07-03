@@ -10,9 +10,9 @@
 #' Compare Features Sets
 #'
 #' Compares the set of features associated with an object, e.g., \code{\link[Biobase]{ExpressionSet}} 
-#' or \code{\link[AnnotationDbi]{ChipDb}} objects.
+#' or \code{\link[AnnotationDbi]{ChipDb-class}} objects.
 #' 
-#' @param x, y objects with associated featureNames
+#' @param x,y objects with associated featureNames
 #' @param ... extra arguments eventually passed to \code{compareFeatures,character,character}. 
 #' 
 #' @export

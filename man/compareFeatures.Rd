@@ -13,7 +13,7 @@
   compareFeatures(x, y, ...)
 }
 \arguments{
-  \item{x,}{y objects with associated featureNames}
+  \item{x,y}{objects with associated featureNames}
 
   \item{...}{extra arguments eventually passed to
   \code{compareFeatures,character,character}.}
@@ -21,7 +21,7 @@
 \description{
   Compares the set of features associated with an object,
   e.g., \code{\link[Biobase]{ExpressionSet}} or
-  \code{\link[AnnotationDbi]{ChipDb}} objects.
+  \code{\link[AnnotationDbi]{ChipDb-class}} objects.
 }
 \section{Methods}{
   \describe{

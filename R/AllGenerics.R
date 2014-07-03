@@ -22,6 +22,7 @@ setGeneric('featureNames', package='Biobase')
 
 #' @rdname Bioc-generics
 #' @export
+#' @inline
 setGeneric('featureNames<-', package='Biobase')
 
 #' Returns the row names of \code{object}.
@@ -42,9 +43,11 @@ setGeneric('sampleNames', package='Biobase')
 
 #' @rdname Bioc-generics
 #' @export
+#' @inline
 setGeneric('sampleNames<-', package='Biobase')
 
 #' Set the row names of \code{object}.
+#' @aliases sampleNames,matrix,ANY
 setReplaceMethod('sampleNames', 'matrix', 
     function(object, value){
         colnames(object) <- value

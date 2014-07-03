@@ -11,7 +11,15 @@ Description: Provides extra utility functions to perform common tasks in
 License: GPL (>= 3)
 Depends:
     R (>= 3.1),
-    Biobase
+    methods,
+    Biobase,
+    AnnotationDbi
+Imports:
+    stats,
+    pkgmaker (>= 0.25.3)
+Suggests:
+    repotools,
+    hgu133plus2.db
 Collate:
     'AllClasses.R'
     'AllGenerics.R'
@@ -19,3 +27,4 @@ Collate:
     'bioc-extra.R'
     'db-packages.R'
     'platforms.R'
+    'utils.R'

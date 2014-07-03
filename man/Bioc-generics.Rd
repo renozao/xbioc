@@ -11,6 +11,7 @@
 \alias{featureNames-methods}
 \alias{sampleNames}
 \alias{sampleNames<-}
+\alias{sampleNames,matrix,ANY}
 \alias{sampleNames<-,matrix-method}
 \alias{sampleNames,matrix-method}
 \alias{sampleNames<--methods}
