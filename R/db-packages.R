@@ -172,7 +172,7 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
             stop("Invalid annotation package name ['",to,"']")
         
         # try load and ask if not possible 
-        if( !uq_requirePackage(to, load=TRUE) )
+        if( !irequire(to, load=TRUE) )
             stop("Aborted computation due to missing annotation package '", to, "'.")
         
         ns <- asNamespace(to)

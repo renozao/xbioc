@@ -122,7 +122,7 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 geneInfo <- function(x, organism = 'human'){
     
     db <- biocann_orgdb(organism)
-    uq_requirePackage(db$org.db, ptype = 'BioCann')
+    irequire(db$org.db, ptype = 'BioCann')
     
     x <- as.character(x)
     symb <- bimap_lookup(x, biocann_object('SYMBOL', db$org.db), multiple = FALSE)
