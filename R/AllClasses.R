@@ -10,8 +10,22 @@
 #' @import pkgmaker
 NULL
 
+#' Generic Bioconductor Utilities
+#' 
+#' \code{isExpressionSet} tells if an object inherits from the class \code{\link[Biobase]{ExpressionSet}}.
+#' 
+#' @param x object 
+#' @export
+isExpressionSet <- function(x){
+    is(x, 'ExpressionSet')
+}
+
 # union class for matrix-like data
 setClassUnion('MatrixData', c('matrix', 'ExpressionSet'))
 
-# tests if an object is a matrix-like data.
-isMatrixData <- function(x) is(x, 'MatrixData')
+#' \code{isExpressionSet} tells if an object is a matrix-like data.
+#' @export
+#' @rdname isExpressionSet
+isMatrixData <- function(x){
+    is(x, 'MatrixData') || isExpressionSet(x)
+}

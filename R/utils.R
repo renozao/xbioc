@@ -64,17 +64,6 @@ log_transform <- function(x, base=2){
     x
 }
 
-#' Generic Bioconductor Utilities
-#' 
-#' \code{isExpressionSet} tells if an object inherits from the class \code{\link[Biobase]{ExpressionSet}}.
-#' 
-#' @param x object 
-#' @export
-isExpressionSet <- function(x){
-    is(x, 'ExpressionSet')
-}
-
-
 #' Initialising a Mapping List
 #' 
 #' @param x object used as right keys
