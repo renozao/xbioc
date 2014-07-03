@@ -4,6 +4,12 @@
 # Created: Mar 12, 2013
 ###############################################################################
 
+#' @import methods
+#' @import Biobase
+#' @import AnnotationDbi
+#' @import pkgmaker
+NULL
+
 # union class for matrix-like data
 setClassUnion('MatrixData', c('matrix', 'ExpressionSet'))
 

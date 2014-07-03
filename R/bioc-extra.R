@@ -73,6 +73,7 @@ setMethod('range', 'ExpressionSet'
 #' \code{quantile} computes the range of expression values in 
 #' \code{\link{ExpressionSet}} objects.
 #' 
+#' @importFrom stats quantile
 #' @S3method quantile ExpressionSet
 #' @rdname ExpressionSet-compute
 quantile.ExpressionSet <- function(x, ...){
