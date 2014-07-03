@@ -19,7 +19,8 @@ Imports:
     pkgmaker (>= 0.25.3)
 Suggests:
     repotools,
-    hgu133plus2.db
+    hgu133plus2.db,
+    org.Hs.eg.db
 Collate:
     'AllClasses.R'
     'AllGenerics.R'

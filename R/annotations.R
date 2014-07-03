@@ -107,13 +107,25 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
     NextMethod()
 }
 
+#' Simple Feature Annotation 
+#' 
+#' @param x ENTREZ gene ids
+#' @inheritParams biocann_orgdb
+#' 
+#' @seealso \code{\link{biocann_orgdb}}
+#' 
+#' @export
+#' @examples 
+#' 
+#' geneInfo(1:20)
+#' 
 geneInfo <- function(x, organism = 'human'){
     
-    db <- .bioc_db0SpeciesMap(organism)
+    db <- biocann_orgdb(organism)
     uq_requirePackage(db$org.db, ptype = 'BioCann')
     
     x <- as.character(x)
-    symb <- sapply(AnnotationDbi::mget(x, biocann_object('SYMBOL', db$org.db), ifnotfound = NA), head, 1L)
-    desc <- sapply(AnnotationDbi::mget(x, biocann_object('GENENAME', db$org.db), ifnotfound = NA), head, 1L)
-    data.frame(ID = x, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
+    symb <- bimap_lookup(x, biocann_object('SYMBOL', db$org.db), multiple = FALSE)
+    desc <- bimap_lookup(x, biocann_object('GENENAME', db$org.db), multiple = FALSE)
+    data.frame(ENTREZID = x, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
 }

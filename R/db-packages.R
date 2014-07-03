@@ -223,7 +223,35 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 ####################
 # ORGANISM PACKAGES
 ####################
-.bioc_db0SpeciesMap <- local({
+#' Bioconductor Organism Data and Packages
+#' 
+#' @param organism Organism name (case insensitive).
+#' Can be specified using the common name (e.g., rat), a partial match of the latin name (e.g., Mus [musculus]), 
+#' or its abbreviation (e.g., Mm). 
+#' 
+#' The following organisms are currently supported:
+#' 
+#' human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rhesus, worm, zebrafish
+#'  
+#' @export
+#' @examples
+#'
+#' # list all 
+#' biocann_orgdb()
+#' 
+#' # common name
+#' biocann_orgdb('human')
+#' 
+#' # latin name
+#' biocann_orgdb('canis')
+#' # any partial match works
+#' biocann_orgdb('canis lupus')
+#' 
+#' # abbreviation
+#' biocann_orgdb('Mm')
+#' 
+biocann_orgdb <- local({
+    
     x <- list(human = 'Homo sapiens'
         , mouse = 'Mus musculus' 
         , rat = 'Rattus norvegicus'
@@ -271,34 +299,7 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 })
 
 
-#' Bioconductor Organism Data and Packages
-#' 
-#' @param organism Organism name (case insensitive).
-#' Can be specified using the common name (e.g., rat), a partial match of the latin name (e.g., Mus [musculus]), 
-#' or its abbreviation (e.g., Mm). 
-#' 
-#' The following organisms are currently supported:
-#' 
-#' human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rhesus, worm, zebrafish
-#'  
-#' @export
-#' @examples
-#'
-#' # list all 
-#' biocann_orgdb()
-#' 
-#' # common name
-#' biocann_orgdb('human')
-#' 
-#' # latin name
-#' biocann_orgdb('canis')
-#' # any partial match works
-#' biocann_orgdb('canis lupus')
-#' 
-#' # abbreviation
-#' biocann_orgdb('Mm')
-#' 
-biocann_orgdb <- .bioc_db0SpeciesMap
+
 
 #' Looking Up Keys in Identifier Maps
 #' 
@@ -306,10 +307,21 @@ biocann_orgdb <- .bioc_db0SpeciesMap
 #' 
 #' @param keys keys to look up
 #' @param map Map as a bimap object, e.g., \code{hgu133plus2ENTREZID}.
+#' @param multiple logical that indicates if all matches should be included, 
+#' or if the result list should be reduced to a one-to-one mapping vector.
+#' Possible values are:
+#' \itemize{
+#' \item \code{TRUE} result is a list with potential multiple matches
+#' \item \code{NA} results is a vector with multiple matches set to NA 
+#' \item \code{FALSE} or \code{'first'} results is a vector with multiple matches resolved by choosing
+#' the \emph{first} match.
+#' \item \code{'last'} results is a vector with multiple matches resolved by choosing
+#' the \emph{last} match.
+#' }
 #' 
 #' @export
-bimap_lookup <- function(keys, map){
-    if( !is.list(map) ){
+bimap_lookup <- function(keys, map, multiple = TRUE){
+    res <- if( !is.list(map) ){
         AnnotationDbi::mget(keys, map, ifnotfound=NA)
     }else{
         res <- NAmap(keys) #setNames(as.list(rep(NA, length(keys))), keys)
@@ -319,4 +331,19 @@ bimap_lookup <- function(keys, map){
         res[mk] <- map[mk]
         res
     }
+
+    # process multiple matches
+    if( !isTRUE(multiple) ){
+        if( is_NA(multiple) ){ # set multiple match to NA
+            res[sapply(res, length) > 1L] <- NA
+            res <- unlist(res)
+        }else if( isFALSE(multiple) || multiple == 'first' ) # choose first 
+            res <- sapply(res, head, 1L)
+        else if( multiple == 'last' ) # choose last 
+            res <- sapply(res, tail, 1L)
+        else stop("Invalid argument `multiple`: must be TRUE, FALSE, NA, first' or 'last'")
+    }
+    
+    # return
+    res
 }
