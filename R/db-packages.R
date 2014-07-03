@@ -300,3 +300,23 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 #' 
 biocann_orgdb <- .bioc_db0SpeciesMap
 
+#' Looking Up Keys in Identifier Maps
+#' 
+#' Look up for keys in a map.
+#' 
+#' @param keys keys to look up
+#' @param map Map as a bimap object, e.g., \code{hgu133plus2ENTREZID}.
+#' 
+#' @export
+bimap_lookup <- function(keys, map){
+    if( !is.list(map) ){
+        AnnotationDbi::mget(keys, map, ifnotfound=NA)
+    }else{
+        res <- NAmap(keys) #setNames(as.list(rep(NA, length(keys))), keys)
+        # early exit on empty map
+        if( !length(map) ) return(res)
+        mk <- keys[keys %in% mappedkeys(map)]
+        res[mk] <- map[mk]
+        res
+    }
+}

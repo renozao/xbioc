@@ -107,7 +107,6 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
     NextMethod()
 }
 
-# #' @importFrom AnnotationDbi mget
 geneInfo <- function(x, organism = 'human'){
     
     db <- .bioc_db0SpeciesMap(organism)

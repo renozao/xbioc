@@ -74,3 +74,19 @@ isExpressionSet <- function(x){
     is(x, 'ExpressionSet')
 }
 
+
+#' Initialising a Mapping List
+#' 
+#' @param x object used as right keys
+#' @return a list with names \code{x} mapping to NA values.
+#' 
+#' @export
+#' 
+#' @examples 
+#' NAmap(letters[1:5])
+#' 
+NAmap <- function(x){
+    as.list(setNames(rep(NA, length(x)), x))
+}
+
+
