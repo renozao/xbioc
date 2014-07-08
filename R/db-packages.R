@@ -226,7 +226,7 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 #' Bioconductor Organism Data and Packages
 #' 
 #' @param organism Organism name (case insensitive).
-#' Can be specified using the common name (e.g., rat), a partial match of the latin name (e.g., Mus [musculus]), 
+#' Can be specified using the common name (e.g., mouse), a partial match of the latin name (e.g., Mus [musculus]), 
 #' or its abbreviation (e.g., Mm). 
 #' 
 #' The following organisms are currently supported:

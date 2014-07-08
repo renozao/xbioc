@@ -6,7 +6,7 @@
 }
 \arguments{
   \item{organism}{Organism name (case insensitive). Can be
-  specified using the common name (e.g., rat), a partial
+  specified using the common name (e.g., mouse), a partial
   match of the latin name (e.g., Mus [musculus]), or its
   abbreviation (e.g., Mm).
 
