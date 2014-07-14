@@ -110,7 +110,9 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' Simple Feature Annotation 
 #' 
 #' @param x ENTREZ gene ids
-#' @inheritParams biocann_orgdb
+#' @param annotation Annotation package to use.
+#' It can be the name of an annotation package or of an organism supported by 
+#' \code{\link{biocann_orgdb}}. 
 #' 
 #' @seealso \code{\link{biocann_orgdb}}
 #' 
@@ -119,13 +121,19 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' 
 #' geneInfo(1:20)
 #' 
-geneInfo <- function(x, organism = 'human'){
+geneInfo <- function(x, annotation = 'human'){
     
-    db <- biocann_orgdb(organism)
-    irequire(db$org.db, ptype = 'BioCann')
+    use_org <- FALSE
+    if( !is.annpkg(annotation) ){
+        use_org <- TRUE
+        db <- biocann_orgdb(annotation)
+        annotation <- db$org.db
+    }
+    irequire(annotation, ptype = 'BioCann')
     
     x <- as.character(x)
-    symb <- bimap_lookup(x, biocann_object('SYMBOL', db$org.db), multiple = FALSE)
-    desc <- bimap_lookup(x, biocann_object('GENENAME', db$org.db), multiple = FALSE)
-    data.frame(ENTREZID = x, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
+    ez <- if( use_org ) x else bimap_lookup(x, biocann_object('ENTREZID', annotation), multiple = FALSE)
+    symb <- bimap_lookup(x, biocann_object('SYMBOL', annotation), multiple = FALSE)
+    desc <- bimap_lookup(x, biocann_object('GENENAME', annotation), multiple = FALSE)
+    data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
 }

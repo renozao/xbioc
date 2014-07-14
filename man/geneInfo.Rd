@@ -2,20 +2,14 @@
 \alias{geneInfo}
 \title{Simple Feature Annotation}
 \usage{
-  geneInfo(x, organism = "human")
+  geneInfo(x, annotation = "human")
 }
 \arguments{
   \item{x}{ENTREZ gene ids}
 
-  \item{organism}{Organism name (case insensitive). Can be
-  specified using the common name (e.g., mouse), a partial
-  match of the latin name (e.g., Mus [musculus]), or its
-  abbreviation (e.g., Mm).
-
-  The following organisms are currently supported:
-
-  human, arabidopsis, bovine, canine, chicken, chimp,
-  malaria, mouse, pig, rat, rhesus, worm, zebrafish}
+  \item{annotation}{Annotation package to use. It can be
+  the name of an annotation package or of an organism
+  supported by \code{\link{biocann_orgdb}}.}
 }
 \description{
   Simple Feature Annotation
