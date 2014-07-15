@@ -9,7 +9,7 @@
 }
 \details{
   \tabular{ll}{ Package: \tab xbioc\cr Type: \tab
-  Package\cr Version: \tab 0.1.1\cr Date: \tab
+  Package\cr Version: \tab 0.1.2\cr Date: \tab
   2014-07-03\cr License: \tab GPL (>= 3)\cr LazyLoad: \tab
   yes\cr }
 }

@@ -113,15 +113,25 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' @param annotation Annotation package to use.
 #' It can be the name of an annotation package or of an organism supported by 
 #' \code{\link{biocann_orgdb}}. 
+#' @param link Indicates the type of online resource to link gene identifiers.
+#' If not \code{'none'}, then ENTREZID and Symbols columns contain HTML links 
+#' (<a> tags) that links to the corresponding gene page.
 #' 
 #' @seealso \code{\link{biocann_orgdb}}
 #' 
 #' @export
 #' @examples 
 #' 
-#' geneInfo(1:20)
+#' # Entrez IDs
+#' geneInfo(1:5)
+#' geneInfo(1:5, link = 'bioGPS')
 #' 
-geneInfo <- function(x, annotation = 'human'){
+#' # probe ids
+#' geneInfo(c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id"), 'hgu133plus2.db')
+#' geneInfo(c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id"), 'hgu133plus2.db', link = 'bioGPS')
+#' 
+#' 
+geneInfo <- function(x, annotation = 'human', link = c('none', 'bioGPS', 'NCBI')){
     
     use_org <- FALSE
     if( !is.annpkg(annotation) ){
@@ -134,6 +144,26 @@ geneInfo <- function(x, annotation = 'human'){
     x <- as.character(x)
     ez <- if( use_org ) x else bimap_lookup(x, biocann_object('ENTREZID', annotation), multiple = FALSE)
     symb <- bimap_lookup(x, biocann_object('SYMBOL', annotation), multiple = FALSE)
+    ez[is.na(symb)] <- NA
     desc <- bimap_lookup(x, biocann_object('GENENAME', annotation), multiple = FALSE)
-    data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
+    
+    df <- data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
+    rownames(df) <- x
+    
+    # convert to HTML links
+    link <- match.arg(link)
+    if( link != 'none' ){
+        tolink <- c('ENTREZID', 'Symbol')
+        base <- switch(link
+                , bioGPS = "http://biogps.org/gene/"
+                , NCBI = "http://www.ncbi.nlm.nih.gov/gene/")
+        .link <- function(x, id = x){
+            ok <- !is.na(id) & nzchar(x)
+            x[ok] <- sprintf('<a href="%s%s">%s</a>', base, id[ok], x[ok])
+            x
+        }
+        df[tolink] <- sapply(df[tolink], .link, id = df$ENTREZID, simplify = FALSE)
+    }
+    
+    df
 }
