@@ -159,7 +159,7 @@ geneInfo <- function(x, annotation = 'human', link = c('none', 'bioGPS', 'NCBI')
                 , NCBI = "http://www.ncbi.nlm.nih.gov/gene/")
         .link <- function(x, id = x){
             ok <- !is.na(id) & nzchar(x)
-            x[ok] <- sprintf('<a href="%s%s">%s</a>', base, id[ok], x[ok])
+            x[ok] <- sprintf('<a target="_" href="%s%s">%s</a>', link, base, id[ok], x[ok])
             x
         }
         df[tolink] <- sapply(df[tolink], .link, id = df$ENTREZID, simplify = FALSE)
