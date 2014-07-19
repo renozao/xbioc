@@ -133,6 +133,12 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' 
 geneInfo <- function(x, annotation = 'human', link = c('none', 'bioGPS', 'NCBI')){
     
+    # handle ExpressionSet objects
+    if( isExpressionSet(x) ){
+        if( missing(annotation) || is.null(annotation) ) annotation <- annotation(x)
+        x <- featureNames(x)
+    }
+    
     use_org <- FALSE
     if( !is.annpkg(annotation) ){
         use_org <- TRUE
