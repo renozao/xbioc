@@ -34,10 +34,10 @@
   names should contain the extension '.db'.}
 }
 \description{
-  The \pkg{CellMix} package contains a few utility
-  functions to facilitate working with Bioconductor
-  annotations, which extends or enhance functions available
-  in packages such as \pkg{annotate}.
+  The \pkg{xbioc} package contains a few utility functions
+  to facilitate working with Bioconductor annotations,
+  which extends or enhance functions available in packages
+  such as \pkg{annotate}.
 
   \code{is.annpkg} tells if an object is the name of an
   annotation package.

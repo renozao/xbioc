@@ -10,7 +10,7 @@ NULL
 #' Numeric Computations on ExpressionSet objects 
 #' 
 #' @description
-#' The \pkg{CellMix} defines some generics and methods to apply numeric transformations 
+#' The \pkg{xbioc} package defines some generics and methods to apply numeric transformations 
 #' to \code{ExpressionSet} objects, which is convenient when working on gene expression 
 #' deconvolution algorithms, where scale (log/linear) may matter. 
 #'  

@@ -9,7 +9,7 @@
 #' Annotation Tools
 #' 
 #' @description
-#' The \pkg{CellMix} package contains a few utility functions to facilitate 
+#' The \pkg{xbioc} package contains a few utility functions to facilitate 
 #' working with Bioconductor annotations, which extends or enhance functions
 #' available in packages such as \pkg{annotate}.
 #' 
