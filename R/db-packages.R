@@ -26,6 +26,13 @@
 #' is.annpkg(c('ddd', 'eee.db'))
 is.annpkg <- function(x) is.character(x) && length(x)>0L && all(grepl("\\.db$", x))
 
+#' @rdname annotation-tools
+#' @export
+is.orgpkg <- function(x) {
+    ann <- annotation(x)
+    !is.null(ann) && length(grep("^org\\.", ann)) == 1
+}
+
 #' \code{is.anndb} tells if an object is an annotation db object such as 
 #' \code{hgu133a.db}.
 #' 
@@ -346,4 +353,16 @@ bimap_lookup <- function(keys, map, multiple = TRUE){
     
     # return
     res
+}
+
+#' @export
+biocann_orgkey <- function(x){
+    x <- strsplit(x, " ")[[1]]
+    toupper(paste0(substr(x[1],1,3), substr(x[2],1,2)))
+}
+#' @export
+biocann_inp_pkgname <- function(x){
+    x <- strsplit(x, " ")[[1]]
+    p <- paste0(toupper(substr(x[1],1,1)), tolower(substr(x[2],1,1)))
+    p <- paste0('hom.', p, '.inp.db')
 }

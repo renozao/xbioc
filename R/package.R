@@ -5,4 +5,5 @@
 ###############################################################################
 
 #' @docType package
+#' @bibliography ~/Documents/articles/library.bib
 NULL

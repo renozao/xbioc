@@ -30,8 +30,9 @@ geneInfo(1:5)
 geneInfo(1:5, link = 'bioGPS')
 
 # probe ids
-geneInfo(c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id"), 'hgu133plus2.db')
-geneInfo(c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id"), 'hgu133plus2.db', link = 'bioGPS')
+ids <- c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id")
+geneInfo(ids, 'hgu133plus2.db')
+geneInfo(ids, 'hgu133plus2.db', link = 'bioGPS')
 }
 \seealso{
   \code{\link{biocann_orgdb}}

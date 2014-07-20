@@ -107,3 +107,25 @@ setMethod('intersect', signature(x='MatrixData', y='MatrixData'),
             intersect(x, featureNames(y))
         }
 )
+
+#' Identifying Gene or Probe ID Type
+#' 
+#' The S4 generic \code{idtype} automatically determine the type 
+#' of gene/feature identifiers stored in objects, based on a combination of 
+#' regular expression patterns and test functions.
+#' 
+#' It uses a heuristic based on a set of regular expressions and functions 
+#' that uniquely match most common types of identifiers, such as Unigene, 
+#' entrez gene, Affymetrix probe ids, Illumina probe ids, etc..
+#' 
+#' @param object an R object that contains the gene identifiers whose type is to 
+#' be determined.
+#' @param ... extra argument to allow extension, generally passed down to 
+#' \code{idtype,character-method}.
+#' See each method's description for more details.
+#' 
+#' @export
+#' @inline
+setGeneric('idtype', function(object, ...) standardGeneric('idtype'))
+
+

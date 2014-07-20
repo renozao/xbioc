@@ -4,9 +4,12 @@
 \alias{biocann_pkgobject}
 \alias{is.anndb}
 \alias{is.annpkg}
+\alias{is.orgpkg}
 \title{Annotation Tools}
 \usage{
   is.annpkg(x)
+
+  is.orgpkg(x)
 
   is.anndb(x)
 
