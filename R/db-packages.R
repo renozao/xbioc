@@ -328,6 +328,15 @@ biocann_orgdb <- local({
 #' 
 #' @export
 bimap_lookup <- function(keys, map, multiple = TRUE){
+    
+    if( isExpressionSet(keys) || is.matrix(keys) ) keys <- featureNames(keys)
+    keys <- as.character(keys)
+    
+    if( length(kNA <- which(is.na(keys))) ){
+        res_ <- NAmap(keys)
+        keys <- keys[-kNA]
+    }
+    
     res <- if( !is.list(map) ){
         AnnotationDbi::mget(keys, map, ifnotfound=NA)
     }else{
@@ -349,6 +358,12 @@ bimap_lookup <- function(keys, map, multiple = TRUE){
         else if( multiple == 'last' ) # choose last 
             res <- sapply(res, tail, 1L)
         else stop("Invalid argument `multiple`: must be TRUE, FALSE, NA, first' or 'last'")
+    }
+    
+    if( length(kNA) ){
+        if( isTRUE(multiple) ) res_ <- as.list(res_)
+        res_[-kNA] <- res
+        res <- res_
     }
     
     # return
