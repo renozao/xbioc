@@ -93,7 +93,7 @@
   same "length" as \code{object} otherwise.
 }
 \description{
-  The S4 generic \code{idtype} automatically determine the
+  The S4 generic \code{idtype} automatically determines the
   type of gene/feature identifiers stored in objects, based
   on a combination of regular expression patterns and test
   functions.
@@ -101,7 +101,7 @@
 \details{
   It uses a heuristic based on a set of regular expressions
   and functions that uniquely match most common types of
-  identifiers, such as Unigene, entrez gene, Affymetrix
+  identifiers, such as Unigene, Entrez gene, Affymetrix
   probe ids, Illumina probe ids, etc..
 }
 \section{Methods}{
