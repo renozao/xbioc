@@ -109,13 +109,15 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 
 #' Simple Feature Annotation 
 #' 
-#' @param x ENTREZ gene ids
+#' @param x feature identifiers to annotate
 #' @param annotation Annotation package to use.
 #' It can be the name of an annotation package or of an organism supported by 
 #' \code{\link{biocann_orgdb}}. 
-#' @param link Indicates the type of online resource to link gene identifiers.
-#' If not \code{'none'}, then ENTREZID and Symbols columns contain HTML links 
-#' (<a> tags) that links to the corresponding gene page.
+#' @param extras Indicates the type of information/resource to add for each feature.
+#' Out-links to online resource can be added the prefix \code{'~'} to selected resources.
+#' 
+#' Note that the resources \code{'NCBI'} and \code{'bioGPS'} are \emph{de facto} online resources, 
+#' and make ENTREZID and Symbol as links to the respective gene page. 
 #' 
 #' @seealso \code{\link{biocann_orgdb}}
 #' 
@@ -124,15 +126,16 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' 
 #' # Entrez IDs
 #' geneInfo(1:5)
-#' geneInfo(1:5, link = 'bioGPS')
+#' geneInfo(1:5, extras = 'bioGPS')
 #' 
 #' # probe ids
 #' ids <- c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id")
 #' geneInfo(ids, 'hgu133plus2.db')
-#' geneInfo(ids, 'hgu133plus2.db', link = 'bioGPS')
+#' geneInfo(ids, 'hgu133plus2.db', extras = 'bioGPS')
+#' geneInfo(ids, 'hgu133plus2.db', extras = 'pathwayID')
 #' 
 #' 
-geneInfo <- function(x, annotation = 'human', link = c('none', 'bioGPS', 'NCBI')){
+geneInfo <- function(x, annotation = 'human', extras = c('bioGPS', 'NCBI', 'pathway')){
     
     # handle ExpressionSet objects
     if( isExpressionSet(x) ){
@@ -155,21 +158,49 @@ geneInfo <- function(x, annotation = 'human', link = c('none', 'bioGPS', 'NCBI')
     desc <- bimap_lookup(x, biocann_object('GENENAME', annotation), multiple = FALSE)
     
     df <- data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
+    if( !use_org ) df$ID <- x
     rownames(df) <- x
     
-    # convert to HTML links
-    link <- match.arg(link)
-    if( link != 'none' ){
+    # add extra ressource
+    if( missing(extras) || is_NA(extras) ) return(df)
+    # check which must be links
+    with_link <- grepl("^~", extras)
+    as_names <- grepl("\\+$", extras)
+    extras <- gsub("^~", "\\1", extras)
+    extras <- gsub("\\+$", "", extras)
+    extras <- match.arg(extras, several.ok = TRUE)
+    
+    if( length(it <- which(extras %in% c('NCBI', 'bioGPS'))) ){
         tolink <- c('ENTREZID', 'Symbol')
-        base <- switch(link
+        olink <- extras[it[1L]]
+        base <- switch(olink
                 , bioGPS = "http://biogps.org/gene/"
                 , NCBI = "http://www.ncbi.nlm.nih.gov/gene/")
         .link <- function(x, id = x){
             ok <- !is.na(id) & nzchar(x)
-            x[ok] <- sprintf('<a target="_" href="%s%s">%s</a>', link, base, id[ok], x[ok])
+            x[ok] <- sprintf('<a target="_%s" href="%s%s">%s</a>', olink, base, id[ok], x[ok])
             x
         }
-        df[tolink] <- sapply(df[tolink], .link, id = df$ENTREZID, simplify = FALSE)
+        df[tolink] <- sapply(df[tolink], .link, id = ez, simplify = FALSE)
+    }
+    
+    if( length(ip <- which(extras == 'pathway')) ){
+        library(reactome.db)
+        df$Pathway <- bimap_lookup(ez, reactomeEXTID2PATHID, multiple = TRUE)
+        
+        if( as_names[ip] ){
+            pathName <- sapply(df$Pathway, function(x){
+                        if( is_NA(x) ) NA
+                        else bimap_lookup(x, reactomePATHID2NAME)
+                    }, simplify = FALSE)
+        
+            sep <- paste0(if( with_link[ip] ) "<br />", "\n")
+            df$Pathway <- sapply(pathName, paste0, collapse = sep)
+        }else if( with_link[ip] ){
+            ok <- !is.na(df$Pathway)
+            .link <- function(x) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', x, x) 
+            df$Pathway[ok] <- sapply(sapply(df$Pathway[ok], .link, simplify = FALSE), paste0, collapse = ", ")
+        }
     }
     
     df
