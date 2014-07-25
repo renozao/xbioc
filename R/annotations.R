@@ -188,19 +188,23 @@ geneInfo <- function(x, annotation = 'human', extras = c('bioGPS', 'NCBI', 'path
         library(reactome.db)
         df$Pathway <- bimap_lookup(ez, reactomeEXTID2PATHID, multiple = TRUE)
         
+        sep <- ", "
         if( as_names[ip] ){
-            pathName <- sapply(df$Pathway, function(x){
+            sep <- "\n"
+            df$Pathway <- sapply(df$Pathway, function(x){
                         if( is_NA(x) ) NA
                         else bimap_lookup(x, reactomePATHID2NAME)
                     }, simplify = FALSE)
-        
-            sep <- paste0(if( with_link[ip] ) "<br />", "\n")
-            df$Pathway <- sapply(pathName, paste0, collapse = sep)
-        }else if( with_link[ip] ){
-            ok <- !is.na(df$Pathway)
-            .link <- function(x) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', x, x) 
-            df$Pathway[ok] <- sapply(sapply(df$Pathway[ok], .link, simplify = FALSE), paste0, collapse = ", ")
         }
+        
+        # add links
+        ok <- !is.na(df$Pathway)
+        if( with_link[ip] ){
+            sep <- "<br />\n"
+            .link <- function(x) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', x, x)
+            df$Pathway[ok] <- sapply(df$Pathway[ok], .link, simplify = FALSE)
+        } 
+        df$Pathway[ok] <- sapply(df$Pathway[ok], paste0, collapse = sep)
     }
     
     df
