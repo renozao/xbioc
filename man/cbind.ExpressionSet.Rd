@@ -2,18 +2,20 @@
 \alias{cbind.ExpressionSet}
 \title{Combining Expression Matrices}
 \usage{
-  \method{cbind}{ExpressionSet} (..., deparse.level = 1)
+  \method{cbind}{ExpressionSet} (..., .id = ".id",
+    deparse.level = 1)
 }
 \arguments{
-  \item{...}{series of \code{ExpressionSet} and/or matrix
-  objects.}
+  \item{...}{series of \code{ExpressionSet} and/or matrix objects.}
 
-  \item{deparse.level}{integer controlling the construction
-  of labels in the case of non-matrix-like arguments (for
-  the default method):\cr \code{deparse.level = 0}
-  constructs no labels; the default,\cr \code{deparse.level
-  = 1 or 2} constructs labels from the argument names, see
-  the \sQuote{Value} section below.}
+  \item{.id}{name of the phenotypic variable created to old each dataset ID.
+If argument are named then these are used as values.}
+
+  \item{deparse.level}{integer controlling the construction of labels in
+    the case of non-matrix-like arguments (for the default method):\cr
+    \code{deparse.level = 0} constructs no labels; the default,\cr
+    \code{deparse.level = 1 or 2} constructs labels from the argument
+    names, see the \sQuote{Value} section below.}
 }
 \value{
   an \code{ExpressionSet} object

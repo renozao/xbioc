@@ -94,13 +94,15 @@ quantile.ExpressionSet <- function(x, ...){
 #' annotations.
 #' 
 #' @param ... series of \code{ExpressionSet} and/or matrix objects.
+#' @param .id name of the phenotypic variable created to old each dataset ID.
+#' If argument are named then these are used as values.  
 #' @inheritParams base::cbind
 #' 
 #' @return an \code{ExpressionSet} object
 #' 
 #' @S3method cbind ExpressionSet
 #' @export
-cbind.ExpressionSet <- function(..., deparse.level = 1){
+cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
     objects <- list(...)
     nobjects <- length(objects)
     if( nobjects == 1L && is.list(objects[[1L]]) ){
@@ -133,6 +135,11 @@ cbind.ExpressionSet <- function(..., deparse.level = 1){
     #pd <- mapply(as, pd, pd_class)
     sn <- unlist(lapply(objects, sampleNames), use.names = FALSE)
     pd <- as.data.frame(pd, row.names = sn)
+    # add .id
+    if( is.null(ids <- names(objects)) ){
+        ids <- as.character(seq_along(objects))
+    } 
+    pd[[.id]] <- unname(unlist(mapply(rep, ids, sapply(objects, ncol))))
 #    str(pd)
     ExpressionSet(out, phenoData = AnnotatedDataFrame(pd), annotation = annotation(objects[[1]]))
 }
