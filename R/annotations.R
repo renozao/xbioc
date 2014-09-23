@@ -135,7 +135,7 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' geneInfo(ids, 'hgu133plus2.db', extras = 'pathwayID')
 #' 
 #' 
-geneInfo <- function(x, annotation = 'human', extras = c('bioGPS', 'NCBI', 'pathway')){
+geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'pathway', 'kegg')){
     
     # handle ExpressionSet objects
     if( isExpressionSet(x) ){
@@ -163,19 +163,21 @@ geneInfo <- function(x, annotation = 'human', extras = c('bioGPS', 'NCBI', 'path
     
     # add extra ressource
     if( missing(extras) || is_NA(extras) ) return(df)
+    extras <- tolower(extras)
     # check which must be links
     with_link <- grepl("^~", extras)
     as_names <- grepl("\\+$", extras)
-    extras <- gsub("^~", "\\1", extras)
+    as_is <- grepl("^\\.", extras)
+    extras <- gsub("^[~.]", "\\1", extras)
     extras <- gsub("\\+$", "", extras)
     extras <- match.arg(extras, several.ok = TRUE)
     
-    if( length(it <- which(extras %in% c('NCBI', 'bioGPS'))) ){
+    if( length(i <- which(extras %in% c('ncbi', 'biogps'))) ){
         tolink <- c('ENTREZID', 'Symbol')
-        olink <- extras[it[1L]]
+        olink <- extras[i[1L]]
         base <- switch(olink
-                , bioGPS = "http://biogps.org/gene/"
-                , NCBI = "http://www.ncbi.nlm.nih.gov/gene/")
+                , biogps = "http://biogps.org/gene/"
+                , ncbi = "http://www.ncbi.nlm.nih.gov/gene/")
         .link <- function(x, id = x){
             ok <- !is.na(id) & nzchar(x)
             x[ok] <- sprintf('<a target="_%s" href="%s%s">%s</a>', olink, base, id[ok], x[ok])
@@ -184,27 +186,48 @@ geneInfo <- function(x, annotation = 'human', extras = c('bioGPS', 'NCBI', 'path
         df[tolink] <- sapply(df[tolink], .link, id = ez, simplify = FALSE)
     }
     
-    if( length(ip <- which(extras == 'pathway')) ){
-        library(reactome.db)
-        df$Pathway <- bimap_lookup(ez, reactomeEXTID2PATHID, multiple = TRUE)
+    .format <- function(x, i, .link = NULL, id = x, collapse = FALSE){
         
-        sep <- ", "
-        if( as_names[ip] ){
-            sep <- "\n"
-            df$Pathway <- sapply(df$Pathway, function(x){
-                        if( is_NA(x) ) NA
-                        else bimap_lookup(x, reactomePATHID2NAME)
-                    }, simplify = FALSE)
+        ok <- !is.na(x)
+        sep <- "|" 
+        if( do_collapse <- !as_is[i] ){
+            is_num <- all(sapply(x[ok], function(...) all(grepl(...)), pattern = '^[0-9]+$'))
+            sep <- ifelse(is_num, ",", "\n")
         }
         
-        # add links
-        ok <- !is.na(df$Pathway)
-        if( with_link[ip] ){
+        if( with_link[i] && !is.null(.link) ){
             sep <- "<br />\n"
-            .link <- function(x) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', x, x)
-            df$Pathway[ok] <- sapply(df$Pathway[ok], .link, simplify = FALSE)
+            x[ok] <- mapply(.link, x[ok], id[ok], SIMPLIFY = FALSE)
         } 
-        df$Pathway[ok] <- sapply(df$Pathway[ok], paste0, collapse = sep)
+        if( do_collapse ) x[ok] <- sapply(x[ok], paste0, collapse = sep)
+        if( collapse ) x <- paste0(x, collapse = sep)  
+        x
+    } 
+    
+    if( length(i <- which(extras == 'pathway')) ){
+        library(reactome.db)
+        p <- pid <- bimap_lookup(ez, reactomeEXTID2PATHID)
+        # http://pid.nci.nih.gov/search/pathway_landing.shtml?what=graphic&jpg=on&pathway_id=xxxxxx&source=ReactomeImported
+        .link <- function(x, id) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', id, x)
+        if( as_names[i] ){
+            p <- sapply(pid, function(x){
+                        if( is_NA(x) ) NA
+                        else{
+                            pn <- bimap_lookup(x, reactomePATHID2NAME)
+                            fpn <- .format(pn, i, .link = .link, id = x, collapse = TRUE)
+                            df$Pathway <- unlist(fpn)
+                        }
+                    }, simplify = FALSE)
+            .link <- NULL
+        }
+        
+        # format
+        df$Pathway <- as.character(.format(p, i, id = pid, .link = .link))
+    }
+    
+    if( length(i <- which(extras == 'kegg')) ){
+        k <- bimap_lookup(x, biocann_object('PATH', annotation), multiple = TRUE)
+        df$KEGG <- .format(k, i, function(x, id) sprintf('<a target="_pathway" href="http://kegg.org/pathway/%s">%s</a>', x, x))
     }
     
     df
