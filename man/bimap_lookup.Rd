@@ -7,19 +7,19 @@
 \arguments{
   \item{keys}{keys to look up}
 
-  \item{map}{Map as a bimap object, e.g.,
-  \code{hgu133plus2ENTREZID}.}
+  \item{map}{Map as a bimap object, e.g., \code{hgu133plus2ENTREZID}.}
 
-  \item{multiple}{logical that indicates if all matches
-  should be included, or if the result list should be
-  reduced to a one-to-one mapping vector. Possible values
-  are: \itemize{ \item \code{TRUE} result is a list with
-  potential multiple matches \item \code{NA} results is a
-  vector with multiple matches set to NA \item \code{FALSE}
-  or \code{'first'} results is a vector with multiple
-  matches resolved by choosing the \emph{first} match.
-  \item \code{'last'} results is a vector with multiple
-  matches resolved by choosing the \emph{last} match. }}
+  \item{multiple}{logical that indicates if all matches should be included,
+or if the result list should be reduced to a one-to-one mapping vector.
+Possible values are:
+\itemize{
+\item \code{TRUE} result is a list with potential multiple matches
+\item \code{NA} results is a vector with multiple matches set to NA
+\item \code{FALSE} or \code{'first'} results is a vector with multiple matches resolved by choosing
+the \emph{first} match.
+\item \code{'last'} results is a vector with multiple matches resolved by choosing
+the \emph{last} match.
+}}
 }
 \description{
   Look up for keys in a map.

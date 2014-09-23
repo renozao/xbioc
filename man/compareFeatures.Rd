@@ -15,8 +15,7 @@
 \arguments{
   \item{x,y}{objects with associated featureNames}
 
-  \item{...}{extra arguments eventually passed to
-  \code{compareFeatures,character,character}.}
+  \item{...}{extra arguments eventually passed to \code{compareFeatures,character,character}.}
 }
 \description{
   Compares the set of features associated with an object,
@@ -24,13 +23,13 @@
   \code{\link[AnnotationDbi]{ChipDb-class}} objects.
 }
 \section{Methods}{
-  \describe{
+\describe{
 
-  \item{compareFeatures}{\code{signature(x = "character", y
-  = "character")}: Workhorse function comparing the feature
-  sets \code{x} and \code{y}. }
+\item{compareFeatures}{\code{signature(x = "character", y = "character")}: Workhorse function comparing the feature sets \code{x} and \code{y}.
+}
 
-  }
+}
+
 }
 \keyword{methods}
 

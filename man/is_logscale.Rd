@@ -11,8 +11,7 @@
   log_transform(x, base = 2)
 }
 \arguments{
-  \item{x}{a numeric data object (matrix, vector,
-  ExpressionSet)}
+  \item{x}{a numeric data object (matrix, vector, ExpressionSet)}
 
   \item{base}{log base to use.}
 }

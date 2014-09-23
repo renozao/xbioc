@@ -29,68 +29,69 @@
   \S4method{idtype}{AnnDbBimap}(object, limit = 500L, ...)
 }
 \arguments{
-  \item{object}{an R object that contains the gene
-  identifiers whose type is to be determined.}
+  \item{object}{an R object that contains the gene identifiers whose type is to
+be determined.}
 
-  \item{...}{extra argument to allow extension, generally
-  passed down to \code{idtype,character-method}. See each
-  method's description for more details.}
+  \item{...}{extra argument to allow extension, generally passed down to
+\code{idtype,character-method}.
+See each method's description for more details.}
 
-  \item{def}{a logical or a subsetting vector, used when
-  \code{object} is missing, which indicates that the result
-  should contain the definition of the matching
-  pattern/function of each type, or which type's deifnition
-  should be included in the result list.}
+  \item{def}{a logical or a subsetting vector, used when \code{object} is missing,
+which indicates that the result should contain the definition of the matching
+pattern/function of each type, or which type's deifnition should be included
+in the result list.}
 
-  \item{each}{logical indicating whether the type of each
-  element should be returned (\code{TRUE}) or only the type
-  of the vector as a whole (default).}
+  \item{each}{logical indicating whether the type of each element should be
+returned (\code{TRUE}) or only the type of the vector as a whole (default).}
 
-  \item{limit}{specification for limiting which elements
-  are used to detect the type of identifiers. If a single
-  numeric, then only the first \code{limit} elements are
-  used. Otherwise it must be a subsetting logical or
-  numeric vector.}
+  \item{limit}{specification for limiting which elements are used to
+detect the type of identifiers.
+If a single numeric, then only the first \code{limit} elements
+are used. Otherwise it must be a subsetting logical or numeric vector.}
 
-  \item{no.match}{character string that specifies the
-  string to use when the type cannot be determined.
+  \item{no.match}{character string that specifies the string to use when the
+type cannot be determined.
 
-  The IDs can be either: \itemize{ \item{probe IDs (e.g.
-  123456_at or ILMN_123456 for Affymetrix or Illumina chips
-  respectively), the type starts with a dot \code{'.'},
-  allowing the subsequent handling of such IDs as a group.}
-  \item{other biological ID types, the result are character
-  strings such as those used as attributes in Bioconductor
-  annotation packages (e.g. \code{"ENTREZID"} or
-  \code{"ENSEMBL"})} \item{Names of annotation packages
-  e.g. \code{"hgu133plus2.db"}.} }
+The IDs can be either:
+\itemize{
+\item{probe IDs (e.g. 123456_at or ILMN_123456 for Affymetrix or Illumina
+chips respectively), the type starts with a dot \code{'.'}, allowing the
+subsequent handling of such IDs as a group.}
+\item{other biological ID types, the result are character strings such as
+those used as attributes in Bioconductor annotation packages
+(e.g. \code{"ENTREZID"} or \code{"ENSEMBL"})}
+\item{Names of annotation packages e.g. \code{"hgu133plus2.db"}.}
+}
 
-  This function is able to identify the following ID types
-  using regular expression patterns or dedicated function:
-  \itemize{ \item ENSEMBL = "^ENSG[0-9]+$" \item
-  ENSEMBLTRANS = "^ENST[0-9]+$" \item ENSEMBLPROT =
-  "^ENSP[0-9]+$" \item ENTREZID = "^[0-9]+$" \item IMAGE =
-  "^IMAGE:[0-9]+$" \item GOID = "^GO:[0-9]+$" \item PFAM =
-  "^PF[0-9]+$" \item REFSEQ = "^N[MP]_[0-9]+$" \item ENZYME
-  = "^[0-9]+(\\.(([0-9]+)|-)+){3}$" \item MAP =
-  "^[0-9XY]+((([pq])|(cen))(([0-9]+(\\.[0-9]+)?)|(ter))?(-([0-9XY]+)?(([pq]?)|(cen))((ter)|([0-9]+(\\.[0-9]+)?))?)?)?$"
-  \item GENEBANK (Nucleotide) = "^[A-Z][0-9]{5}$" |
-  "^[A-Z]{2}[0-9]{6}$" \item GENEBANK (Protein) =
-  "^[A-Z]{3}[0-9]{5}$" \item GENEBANK (WGS) =
-  "^[A-Z]{4}[0-9]{8}[0-9]?[0-9]?$" \item GENEBANK (MGA) =
-  "^[A-Z]{5}[0-9]{7}$" \item GENENAME = " " \item
-  .Affymetrix =
-  "(^AFFX-)|(^[0-9]+_([abfgilrsx]_)?([as]t)|(i))$" \item
-  .Illumina = "^ILMN_[0-9]+$" \item .Agilent =
-  "^A_[0-9]+_P[0-9]+$" \item .nuID = use the function
-  \code{\link{nuIDdecode}} to try converting the ids into
-  nucleotide sequences. Identification is positive if no
-  error is thrown during the conversion. }}
+This function is able to identify the following ID types using regular
+expression patterns or dedicated function:
+\itemize{
+\item ENSEMBL = "^ENSG[0-9]+$"
+\item ENSEMBLTRANS = "^ENST[0-9]+$"
+\item ENSEMBLPROT = "^ENSP[0-9]+$"
+\item ENTREZID = "^[0-9]+$"
+\item IMAGE = "^IMAGE:[0-9]+$"
+\item GOID = "^GO:[0-9]+$"
+\item PFAM = "^PF[0-9]+$"
+\item REFSEQ = "^N[MP]_[0-9]+$"
+\item ENZYME = "^[0-9]+(\\.(([0-9]+)|-)+){3}$"
+\item MAP = "^[0-9XY]+((([pq])|(cen))(([0-9]+(\\.[0-9]+)?)|(ter))?(-([0-9XY]+)?(([pq]?)|(cen))((ter)|([0-9]+(\\.[0-9]+)?))?)?)?$"
+\item GENEBANK (Nucleotide) = "^[A-Z][0-9]{5}$" | "^[A-Z]{2}[0-9]{6}$"
+\item GENEBANK (Protein) = "^[A-Z]{3}[0-9]{5}$"
+\item GENEBANK (WGS) = "^[A-Z]{4}[0-9]{8}[0-9]?[0-9]?$"
+\item GENEBANK (MGA) = "^[A-Z]{5}[0-9]{7}$"
+\item GENENAME = " "
+\item .Affymetrix = "(^AFFX-)|(^[0-9]+_([abfgilrsx]_)?([as]t)|(i))$"
+\item .Illumina = "^ILMN_[0-9]+$"
+\item .Agilent = "^A_[0-9]+_P[0-9]+$"
+\item .nuID = use the function \code{\link{nuIDdecode}} to try converting the
+ids into nucleotide sequences. Identification is positive if no error is
+thrown during the conversion.
+}}
 }
 \value{
-  a single character string (possibly empty) if
-  \code{each=FALSE} (default) or a character vector of the
-  same "length" as \code{object} otherwise.
+  a single character string (possibly empty) if \code{each=FALSE} (default)
+or a character vector of the same "length" as \code{object} otherwise.
 }
 \description{
   The S4 generic \code{idtype} automatically determines the
@@ -105,64 +106,54 @@
   probe ids, Illumina probe ids, etc..
 }
 \section{Methods}{
-  \describe{
+\describe{
 
-  \item{idtype}{\code{signature(object = "missing")}:
-  Method for when \code{idtype} is called with its first
-  argument missing, in which case it returns all or a
-  subset of the known type names as a character vector, or
-  optionally as a list that contains their definition, i.e.
-  a regular expression or a matching function. }
+\item{idtype}{\code{signature(object = "missing")}: Method for when \code{idtype} is called with its first argument missing,
+in which case it returns all or a subset of the known type names as a character
+vector, or optionally as a list that contains their definition, i.e. a regular
+expression or a matching function.
+}
 
-  \item{idtype}{\code{signature(object = "matrix")}:
-  Detects the type of identifiers used in the row names of
-  a matrix. }
+\item{idtype}{\code{signature(object = "matrix")}: Detects the type of identifiers used in the row names of a matrix.
+}
 
-  \item{idtype}{\code{signature(object = "NULL")}: Dummy
-  method -- defined for convenience -- that returns
-  \code{''} }
+\item{idtype}{\code{signature(object = "NULL")}: Dummy method -- defined for convenience -- that returns \code{''}
+}
 
-  \item{idtype}{\code{signature(object = "vector")}: This
-  is the workhorse method that determine the type of ids
-  contained in a character vector. }
+\item{idtype}{\code{signature(object = "vector")}: This is the workhorse method that determine the type of ids contained in
+a character vector.
+}
 
-  \item{idtype}{\code{signature(object = "ExpressionSet")}:
-  Detects the type of identifiers used in the feature names
-  of an \code{ExpressionSet} object. }
+\item{idtype}{\code{signature(object = "ExpressionSet")}: Detects the type of identifiers used in the feature names of an \code{ExpressionSet} object.
+}
 
-  \item{idtype}{\code{signature(object =
-  "ProbeAnnDbBimap")}: Detects the type of the primary
-  identifiers of a probe annotation bimap object.
+\item{idtype}{\code{signature(object = "ProbeAnnDbBimap")}: Detects the type of the primary identifiers of a probe annotation bimap object.
 
-  To speedup the identification, only the first 500 probes
-  are used by default, since the IDs are very likely to
-  have been curated and to be of the same type. This can be
-  changed using argument \code{limit}. }
+To speedup the identification, only the first 500 probes are used by default,
+since the IDs are very likely to have been curated and to be of the same type.
+This can be changed using argument \code{limit}.
+}
 
-  \item{idtype}{\code{signature(object = "ChipDb")}:
-  Detects the type of the identifiers of a chip annotation
-  object.
+\item{idtype}{\code{signature(object = "ChipDb")}: Detects the type of the identifiers of a chip annotation object.
 
-  To speedup the identification, only the first 500 probes
-  are used by default, since the IDs are very likely to
-  have been curated and to be of the same type. This can be
-  changed using argument \code{limit}. }
+To speedup the identification, only the first 500 probes are used by default,
+since the IDs are very likely to have been curated and to be of the same type.
+This can be changed using argument \code{limit}.
+}
 
-  \item{idtype}{\code{signature(object = "AnnDbBimap")}:
-  Detects the type of the identifiers of an organism
-  annotation object.
+\item{idtype}{\code{signature(object = "AnnDbBimap")}: Detects the type of the identifiers of an organism annotation object.
 
-  To speedup the identification, only the first 500 probes
-  are used by default, since the IDs are very likely to
-  have been curated and to be of the same type. This can be
-  changed using argument \code{limit}. }
+To speedup the identification, only the first 500 probes are used by default,
+since the IDs are very likely to have been curated and to be of the same type.
+This can be changed using argument \code{limit}.
+}
 
-  \item{idtype}{\code{signature(object = "list")}: Detects
-  the type of all elements in a list, but provides the
-  option of detecting the type of each element separately.
-  }
+\item{idtype}{\code{signature(object = "list")}: Detects the type of all elements in a list, but provides the option of
+detecting the type of each element separately.
+}
 
-  }
+}
+
 }
 \examples{
 \dontshow{# roxygen generated flag

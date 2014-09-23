@@ -31,11 +31,9 @@
   \S4method{exprs}{matrix}(object)
 }
 \arguments{
-  \item{object}{Object, possibly derived from class
-  \code{eSet}.}
+  \item{object}{Object, possibly derived from class \code{eSet}.}
 
-  \item{value}{Character vector containing feature or
-  sample names.}
+  \item{value}{Character vector containing feature or sample names.}
 }
 \description{
   The \pkg{xbioc} package provides extra methods for the
@@ -44,26 +42,31 @@
   original Bioconductor interface.
 }
 \section{Methods}{
-  \describe{
+\describe{
 
-  \item{exprs}{\code{signature(object = "matrix")}: Simply
-  returns \code{object}. This method is defined so that
-  function can seamlessly handle both matrix and
-  \code{ExpressionSet} objects. }
+\item{exprs}{\code{signature(object = "matrix")}: Simply returns \code{object}.
+This method is defined so that function can seamlessly handle both matrix and
+\code{ExpressionSet} objects.
+}
 
-  \item{featureNames}{\code{signature(object = "matrix")}:
-  Returns the row names of \code{object}. }
 
-  \item{featureNames<-}{\code{signature(object =
-  "matrix")}: Set the row names of \code{object}. }
+\item{featureNames}{\code{signature(object = "matrix")}: Returns the row names of \code{object}.
+}
 
-  \item{sampleNames}{\code{signature(object = "matrix")}:
-  Returns the column names of \code{object}. }
 
-  \item{sampleNames<-}{\code{signature(object = "matrix")}:
-  Set the row names of \code{object}. }
+\item{featureNames<-}{\code{signature(object = "matrix")}: Set the row names of \code{object}.
+}
 
-  }
+
+\item{sampleNames}{\code{signature(object = "matrix")}: Returns the column names of \code{object}.
+}
+
+
+\item{sampleNames<-}{\code{signature(object = "matrix")}: Set the row names of \code{object}.
+}
+
+}
+
 }
 \keyword{methods}
 

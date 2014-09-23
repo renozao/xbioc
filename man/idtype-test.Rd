@@ -11,8 +11,7 @@
   is_Agilent(x)
 }
 \arguments{
-  \item{x}{object from which the identifier type is
-  computed by \code{\link{idtype}}.}
+  \item{x}{object from which the identifier type is computed by \code{\link{idtype}}.}
 }
 \description{
   This functions tests if identifiers associated with an

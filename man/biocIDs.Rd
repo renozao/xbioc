@@ -13,11 +13,9 @@
 \arguments{
   \item{x}{an R object}
 
-  \item{...}{extra arguments passed to
-  \code{\link{idtype}}.}
+  \item{...}{extra arguments passed to \code{\link{idtype}}.}
 
-  \item{type}{an identifier type as returned by
-  \code{\link{idtype}}.}
+  \item{type}{an identifier type as returned by \code{\link{idtype}}.}
 }
 \description{
   \code{is.idtype} tells if a given character vector

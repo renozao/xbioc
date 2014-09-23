@@ -5,31 +5,24 @@
   biocann_object(to, from = NULL, optional = FALSE)
 }
 \arguments{
-  \item{to}{target annotation field as a character string,
-  e.g., \dQuote{ENTREZID}, \dQuote{ENSEMBL}, or an
-  annotation package or db which means that one wants to
-  retrieve a mapping to its corresponding primary
-  identifier. If \code{from} is missing, \code{to} must be
-  the name of an annotation package, i.e. ends with
-  \dQuote{db}), in which case it tries loading the package
-  and return the whole annotation db object; or any
-  annotation package db or map object such as
-  \code{AnnDbBimap}, \code{ChipDb} or \code{OrgDb} objects,
-  which are returned unchanged.}
+  \item{to}{target annotation field as a character string, e.g., \dQuote{ENTREZID},
+\dQuote{ENSEMBL}, or an annotation package or db which means that one wants to
+retrieve a mapping to its corresponding primary identifier.
+If \code{from} is missing, \code{to} must be the name of an annotation package,
+i.e. ends with \dQuote{db}), in which case it tries loading the package and return
+the whole annotation db object; or any annotation package db or map object such as
+\code{AnnDbBimap}, \code{ChipDb} or \code{OrgDb} objects, which are returned unchanged.}
 
-  \item{from}{source annotation package as a character
-  string e.g. \code{"hgu133a.db"}.}
+  \item{from}{source annotation package as a character string e.g. \code{"hgu133a.db"}.}
 
-  \item{optional}{logical that indicates if the function
-  should return \code{NULL} if the mapping cannot be found
-  (\code{TRUE}), or throw an error. Note that this does not
-  apply to the installation part: if a required annotation
-  package is missing, an error is thrown even if
-  \code{optional=TRUE}.}
+  \item{optional}{logical that indicates if the function should return \code{NULL} if the
+mapping cannot be found (\code{TRUE}), or throw an error.
+Note that this does not apply to the installation part: if a required annotation
+package is missing, an error is thrown even if \code{optional=TRUE}.}
 }
 \value{
-  a \code{\link{ProbeAnnDbBimap}} if annotation is not
-  missing, a \code{ProbeAnnDb} object otherwise.
+  a \code{\link{ProbeAnnDbBimap}} if annotation is not missing,
+a \code{ProbeAnnDb} object otherwise.
 }
 \description{
   The function \code{biocann_object} retrieves annotation

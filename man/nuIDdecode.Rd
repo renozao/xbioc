@@ -10,10 +10,9 @@
 \arguments{
   \item{id}{nuID character vector}
 
-  \item{error}{a logical indicating whether an error should
-  be thrown in case of invalid input nuID (default) or only
-  a warning, as in the original function
-  \code{lumi::id2seq}.}
+  \item{error}{a logical indicating whether an error should be thrown in case
+of invalid input nuID (default) or only a warning, as in the original function
+\code{lumi::id2seq}.}
 }
 \description{
   The function \code{nuIDdecode} converts a nuID string
@@ -40,7 +39,7 @@ nuIDdecode('XERDqYYc2F', error=FALSE)
 \author{
   Pan Du
 
-  Adaptation for \pkg{xbioc}: Renaud Gaujoux
+Adaptation for \pkg{xbioc}: Renaud Gaujoux
 }
 \references{
   Du P, Kibbe Wa and Lin SM (2007). "nuID: a universal

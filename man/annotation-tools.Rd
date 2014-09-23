@@ -20,21 +20,19 @@
   biocann_pkgobject(x)
 }
 \arguments{
-  \item{x}{an R object, either a character string or an
-  annotation object.}
+  \item{x}{an R object, either a character string or an annotation object.}
 
-  \item{annotation}{names of an annotation package, with
-  \dQuote{.db} suffix or not.}
+  \item{annotation}{names of an annotation package, with \dQuote{.db}
+suffix or not.}
 
   \item{map}{name of a map, e.g., \dQuote{ENTREZID}.}
 
-  \item{all}{logical that indicates if all possible names
-  should be returned, and only the simple concatenation of
-  the annotation package's name without \dQuote{.db} and
-  the map name.}
+  \item{all}{logical that indicates if all possible names should be
+returned, and only the simple concatenation of the annotation
+package's name without \dQuote{.db} and the map name.}
 
-  \item{noext}{logical that indicates if returned package
-  names should contain the extension '.db'.}
+  \item{noext}{logical that indicates if returned package names should
+contain the extension '.db'.}
 }
 \description{
   The \pkg{xbioc} package contains a few utility functions

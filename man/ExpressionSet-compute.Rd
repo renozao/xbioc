@@ -28,14 +28,13 @@
 \arguments{
   \item{x}{an \code{ExpressionSet} object.}
 
-  \item{...}{extra arguments passed to subsequent calls,
-  usually of the corresponding method in the \pkg{stats}
-  package.}
+  \item{...}{extra arguments passed to subsequent calls, usually of the corresponding
+method in the \pkg{stats} package.}
 
   \item{base}{log base to use.}
 
-  \item{na.rm}{logical, indicating if \code{\link{NA}}'s
-  should be omitted.}
+  \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
+    omitted.}
 }
 \description{
   The \pkg{xbioc} package defines some generics and methods
@@ -55,16 +54,18 @@
   in \code{\link{ExpressionSet}} objects.
 }
 \section{Methods}{
-  \describe{
+\describe{
 
-  \item{exp}{\code{signature(x = "ExpressionSet")}:
-  \code{exp} is equivalent to \code{expb(x, exp(1))}. }
+\item{exp}{\code{signature(x = "ExpressionSet")}: \code{exp} is equivalent to \code{expb(x, exp(1))}.
+}
 
-  \item{range}{\code{signature(x = "ExpressionSet")}:
-  \code{range} computes the range of expression values from
-  \code{\link{ExpressionSet}} objects. }
 
-  }
+\item{range}{\code{signature(x = "ExpressionSet")}: \code{range} computes the range of expression values from
+\code{\link{ExpressionSet}} objects.
+}
+
+}
+
 }
 \keyword{methods}
 

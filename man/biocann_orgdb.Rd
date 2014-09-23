@@ -5,15 +5,13 @@
   biocann_orgdb(organism)
 }
 \arguments{
-  \item{organism}{Organism name (case insensitive). Can be
-  specified using the common name (e.g., mouse), a partial
-  match of the latin name (e.g., Mus [musculus]), or its
-  abbreviation (e.g., Mm).
+  \item{organism}{Organism name (case insensitive).
+Can be specified using the common name (e.g., mouse), a partial match of the latin name (e.g., Mus [musculus]),
+or its abbreviation (e.g., Mm).
 
-  The following organisms are currently supported:
+The following organisms are currently supported:
 
-  human, arabidopsis, bovine, canine, chicken, chimp,
-  malaria, mouse, pig, rat, rhesus, worm, zebrafish}
+human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rhesus, worm, zebrafish}
 }
 \description{
   Bioconductor Organism Data and Packages
