@@ -139,7 +139,7 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
     if( is.null(ids <- names(objects)) ){
         ids <- as.character(seq_along(objects))
     } 
-    pd[[.id]] <- unname(unlist(mapply(rep, ids, sapply(objects, ncol))))
+    pd[[.id]] <- factor(unname(unlist(mapply(rep, ids, sapply(objects, ncol)))))
 #    str(pd)
     ExpressionSet(out, phenoData = AnnotatedDataFrame(pd), annotation = annotation(objects[[1]]))
 }
