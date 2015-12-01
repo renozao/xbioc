@@ -21,10 +21,17 @@ setGeneric('compareFeatures', function(x, y, ...){ standardGeneric('compareFeatu
 
 #' Workhorse function comparing the feature sets \code{x} and \code{y}. 
 setMethod('compareFeatures', signature(x = 'character', y = 'character'), 
-    function(x, y){
-        common <- intersect(x, y)
-        x.only <- setdiff(x, y)
-        y.only <- setdiff(y, x)
+    function(x, y, unique = FALSE){
+        if( unique ){
+            common <- intersect(x, y)
+            x.only <- setdiff(x, y)
+            y.only <- setdiff(y, x)
+        }else{
+            x_in_y <- x %in% y
+            common <- x[x_in_y]
+            x.only <- x[!x_in_y]
+            y.only <- y[!y %in% x]
+        }
         xl <- length(x)
         yl <- length(y)
         cat(sprintf("  x: %i\n  y: %i\n", xl, yl))
@@ -36,8 +43,13 @@ setMethod('compareFeatures', signature(x = 'character', y = 'character'),
 
 setMethod('compareFeatures', signature(x = 'ANY', y = 'ANY'), 
     function(x, y, ...){
-        if( !is.character(x) ) x <- featureNames(x)
-        if( !is.character(y) ) y <- featureNames(y)
+        if( hasMethod('featureNames', class(x)) ) x <- featureNames(x)
+        else if( hasMethod('rownames', class(x)) ) x <- rownames(x)
+        else x <- as.character(x)
+        if( hasMethod('featureNames', class(y)) ) y <- featureNames(y)
+        else if( hasMethod('rownames', class(y)) ) y <- rownames(y)
+        else y <- as.character(y)
+        
         callGeneric()
 })
 
