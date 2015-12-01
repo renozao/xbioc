@@ -159,7 +159,7 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     
     df <- data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
     if( !use_org ) df$ID <- x
-    rownames(df) <- x
+    #rownames(df) <- x
     
     # add extra ressource
     if( missing(extras) || is_NA(extras) ) return(df)
