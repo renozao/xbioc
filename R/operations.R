@@ -154,3 +154,57 @@ droplevels.ExpressionSet <- function(x, ...){
     x
 }
 
+#' @S3method rbind ExpressionSet 
+#' @export
+rbind.ExpressionSet <- function(..., .id = 'dataType'){
+    
+    DATA <- list(...)
+    if( is.null(names(DATA)) ) names(DATA) <- paste0('dataset', seq_along(DATA))
+    if( anyDuplicated(names(DATA)) )
+        stop("Invalid expression data list: names should be unique.")
+    qlibrary(plyr)
+    # check features do not overlap
+    ok <- lapply(names(DATA), function(n){
+            lapply(setdiff(names(DATA), n), function(p){
+                ok <- length(intersect(featureNames(DATA[[n]]), featureNames(DATA[[p]])))
+                setNames(ok, paste0(n, '-', p))
+            })
+        })
+    ok <- unlist(ok)
+    if( any(ok>0) )
+        stop("Overlapping expression data: datasets should be disjoint [", str_out(ok[ok>0], Inf, use.names = TRUE), "]")
+    
+    # temporary auxiliary column
+    nameCol <- basename(tempfile('NAMES_'))
+    
+    # extract data
+    mat <- as.matrix(ldply(DATA, function(x) exprs(x), .id = NULL))
+    rownames(mat) <- unlist(lapply(DATA, featureNames))
+    
+    # extract and merge pheno data
+    pd <- ldply(DATA, function(x){
+        pd <- pData(x)
+        pd[[nameCol]] <- sampleNames(x)
+        pd
+    }, .id = NULL)
+    pd <- pd[!duplicated(pd[[nameCol]]), ]
+    rownames(pd) <- pd[[nameCol]]
+    pd <- pd[setdiff(names(pd), nameCol)]
+    
+    # extract and bind fetaure data
+    fd <- ldply(DATA, function(x){
+        fd <- fData(x)
+        fd[[.id]] <- NULL
+        fd[[nameCol]] <- featureNames(x)
+        fd
+    }, .id = .id)
+    stopifnot( !anyDuplicated(fd[[nameCol]]) )
+    rownames(fd) <- fd[[nameCol]]
+    fd <- fd[setdiff(names(fd), nameCol)]
+    
+    # build object
+    ExpressionSet(mat, phenoData = AnnotatedDataFrame(pd[colnames(mat), ])
+            , featureData = AnnotatedDataFrame(fd[rownames(mat), ])
+        )
+    
+}
