@@ -232,3 +232,76 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     
     df
 }
+
+
+#' Checks Gene Symbol Validity
+#' 
+#' Look for gene symbols that were transformed by Excel nasty default
+#' setting, which interpreted them as dates or numeric.
+#' 
+#' This issue, although well known in the bioinformatics community, regularly 
+#' surfaces to the detriment of the person who analyses the data. 
+#' It has been reported to affect several publications and even large genomic projects 
+#' (\cite{Zeeberg2004,Ziemann2016}).
+#' 
+#' @param x Character vector of gene symbols to check
+#' @param value Logical that indicates if the value of invalid symbols 
+#' should be returned (\code{TRUE}), or only their index (\code{FALSE}).
+#' @param replace logical that indicates if fixable symbols should be replaced
+#' with their correct value.
+#' If \code{value = FALSE}, then the corrected symbols are set as names of the 
+#' result integer vector, and the incorrect (input) symbols as values.
+#' If \code{value = FALSE}, then the corrected symbols are returned as values of the 
+#' result character vector, and the incorrect (input) symbols as names. 
+#' 
+#' @return character or integer vector depending on the value of argument 
+#' \var{value}.
+#' See help for argument \var{replace}, as this affects what goes into
+#' names and values of the result vector.
+#' 
+#' @examples 
+#' 
+#' bad_symbols <- c('AAA', 'BBB', '1-Dec', '10-JAN')
+#' # index of incorrect symbols
+#' checkSYMBOLS(bad_symbols)
+#' # incorrect symbols
+#' checkSYMBOLS(bad_symbols, value = TRUE)
+#' # return fixed symbols as names (index vector)
+#' checkSYMBOLS(bad_symbols, replace = TRUE)
+#' # return fixed symbols as values (mapping)
+#' checkSYMBOLS(bad_symbols, value = TRUE, replace = TRUE)
+#' 
+checkSYMBOLS <- function(x, value = FALSE, replace = FALSE, quiet = TRUE){
+	
+	# build regexp
+	m <- paste0('(', tolower(month.abb), ')', collapse = '|')
+	reg <- sprintf("^(([0-9]+)-(%s))|([0-9]\\.[0-9][0-9]E\\+[0-9][0-9])$", m)
+	# match
+	m <- str_match(x, regex(reg, ignore_case = TRUE))
+	# identify matches
+	i <- which(!is.na(m[, 1L]))
+	if( !length(i) ) return(i)
+	
+	# distinguish month from scientific numbers
+	is_month <- !is.na(m[i, 2L])
+	
+	if( !quiet ){
+		msg <- sprintf("Gene symbols encoded as months: %s\n  Gene symbols encoded as numerics: %s"
+						, str_out(m[i[is_month], 1L], total = TRUE)
+						, str_out(m[i[!is_month], 1L], total = TRUE)
+				)
+		warning(msg)
+	}
+	
+	if( !replace ) names(i) <- m[i, 1L] 
+	else names(i) <- ifelse(is_month, paste0(m[i, 4L], m[i, 3L]), NA)
+	# use value if requested
+	if( value ){
+		i[] <- m[i, 1L]
+		if( replace ) i <- setNames(names(i), i)
+	}
+	
+	# return
+	i
+}
+
