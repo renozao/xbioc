@@ -8,6 +8,7 @@
 #' @import Biobase
 #' @import AnnotationDbi
 #' @import pkgmaker
+#' @include utils.R
 NULL
 
 #' Generic Bioconductor Utilities

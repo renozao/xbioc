@@ -101,6 +101,7 @@ quantile.ExpressionSet <- function(x, ...){
 #' @return an \code{ExpressionSet} object
 #' 
 #' @S3method cbind ExpressionSet
+#' @importFrom plyr rbind.fill.matrix
 #' @export
 cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
     objects <- list(...)
@@ -115,7 +116,9 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
     if( !isExpressionSet(out) )
         stop("Could not generate ExpressionSet: invalid first element [", class(out), "]")
     #other <- names(objects[[1]]$other)
-    # TODO: check feature names
+    # check feature names
+    fn <- sapply0(objects, featureNames)
+    stopifnot(all(sapply(fn , identical, fn[[1L]])))
     # init pheno data
     pd <- pData(out)
     out <- exprs(out)
@@ -128,7 +131,7 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
                     out <<- cbind(out, if( is(o, 'ExpressionSet') ) exprs(o) else o )
                     # binds pheno data
                     pd_o <- sapply(pData(o), as.character)
-                    pd <<- rbind(pd, pd_o)
+                    pd <<- rbind.fill.matrix(pd, pd_o)
                     NULL
                 })
     }
@@ -140,8 +143,11 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
         ids <- as.character(seq_along(objects))
     } 
     pd[[.id]] <- factor(unname(unlist(mapply(rep, ids, sapply(objects, ncol)))))
+    # fData
+    fd <- featureData(objects[[1L]])
+#    rownames(fd) <- rownames()
 #    str(pd)
-    ExpressionSet(out, phenoData = AnnotatedDataFrame(pd), annotation = annotation(objects[[1]]))
+    ExpressionSet(out, phenoData = AnnotatedDataFrame(pd), featureData = fd, annotation = annotation(objects[[1]]))
 }
 
 
