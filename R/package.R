@@ -6,4 +6,5 @@
 
 #' @docType package
 #' @bibliography ~/Documents/articles/library.bib
+#' @importFrom stats setNames
 NULL
