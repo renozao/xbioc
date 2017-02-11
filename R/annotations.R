@@ -242,7 +242,7 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
 #' This issue, although well known in the bioinformatics community, regularly 
 #' surfaces to the detriment of the person who analyses the data. 
 #' It has been reported to affect several publications and even large genomic projects 
-#' (\cite{Zeeberg2004,Ziemann2016}).
+#' (\cite{Zeeberg2004;Ziemann2016}).
 #' 
 #' @param x Character vector of gene symbols to check
 #' @param value Logical that indicates if the value of invalid symbols 
@@ -259,6 +259,7 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
 #' See help for argument \var{replace}, as this affects what goes into
 #' names and values of the result vector.
 #' 
+#' @export
 #' @examples 
 #' 
 #' bad_symbols <- c('AAA', 'BBB', '1-Dec', '10-JAN')
