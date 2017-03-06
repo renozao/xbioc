@@ -91,7 +91,7 @@ setMethod('idtype', 'missing'
                 , IMAGE = "^IMAGE:[0-9]+$"
                 , GOID="^GO:[0-9]+$"
                 , PFAM="^PF[0-9]+$"
-                , REFSEQ="^[XYN][MPR]_[0-9]+$"
+                , REFSEQ="^[XYN][MPR]_[0-9.]+$"
                 , ENZYME="^[0-9]+(\\.(([0-9]+)|-)+){3}$"
                 , MAP="^(([0-9]{1,2})|([XY]))((([pq])|(cen))(([0-9]+(\\.[0-9]+)?)|(ter))?(-([0-9]{1,2})|([XY]))?(([pq]?)|(cen))((ter)|([0-9]+(\\.[0-9]+)?))?)?)?$"
                 , GENEBANK=c("^[A-Z][0-9]{5}$", "^[A-Z]{2}[0-9]{6}$")
@@ -177,6 +177,7 @@ setMethod('idtype', 'NULL', function(object, ...) '' )
 #' 
 #' @return a single character string (possibly empty) if \code{each=FALSE} (default) 
 #' or a character vector of the same "length" as \code{object} otherwise.
+#' @noMd
 #' @export
 #' @examples
 #' 

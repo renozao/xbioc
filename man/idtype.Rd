@@ -51,56 +51,56 @@ which indicates that the result should contain the definition of the matching
 pattern/function of each type, or which type's deifnition should be included
 in the result list.}
 
-\item{each}{logical indicating whether the type of each element should be
+\item{each}{logical indicating whether the type of each element should be 
 returned (\code{TRUE}) or only the type of the vector as a whole (default).}
 
-\item{limit}{specification for limiting which elements are used to
+\item{limit}{specification for limiting which elements are used to 
 detect the type of identifiers.
-If a single numeric, then only the first \code{limit} elements
+If a single numeric, then only the first \code{limit} elements 
 are used. Otherwise it must be a subsetting logical or numeric vector.}
 
-\item{no.match}{character string that specifies the string to use when the
-type cannot be determined.
+\item{no.match}{character string that specifies the string to use when the 
+type cannot be determined.    
 
 The IDs can be either:
 \itemize{
-\item{probe IDs (e.g. 123456_at or ILMN_123456 for Affymetrix or Illumina
-chips respectively), the type starts with a dot \code{'.'}, allowing the
-subsequent handling of such IDs as a group.}
-\item{other biological ID types, the result are character strings such as
-those used as attributes in Bioconductor annotation packages
-(e.g. \code{"ENTREZID"} or \code{"ENSEMBL"})}
-\item{Names of annotation packages e.g. \code{"hgu133plus2.db"}.}
+\item probe IDs (e.g. 123456_at or ILMN_123456 for Affymetrix or Illumina 
+chips respectively), the type starts with a dot \code{'.'}, allowing the 
+subsequent handling of such IDs as a group.
+\item other biological ID types, the result are character strings such as 
+those used as attributes in Bioconductor annotation packages 
+(e.g. \code{"ENTREZID"} or \code{"ENSEMBL"})
+\item Names of annotation packages e.g. \code{"hgu133plus2.db"}.
 }
 
-This function is able to identify the following ID types using regular
+This function is able to identify the following ID types using regular 
 expression patterns or dedicated function:
 \itemize{
-\item ENSEMBL = "^ENSG\link{0-9}+$"
-\item ENSEMBLTRANS = "^ENST\link{0-9}+$"
-\item ENSEMBLPROT = "^ENSP\link{0-9}+$"
-\item ENTREZID = "^\link{0-9}+$"
-\item IMAGE = "^IMAGE:\link{0-9}+$"
-\item GOID = "^GO:\link{0-9}+$"
-\item PFAM = "^PF\link{0-9}+$"
-\item REFSEQ = "^N\link{MP}\emph{\link{0-9}+$"
-\item ENZYME = "^\link{0-9}+(\.((\link{0-9}+)|-)+){3}$"
-\item MAP = "^\link{0-9XY}+(((\link{pq})|(cen))((\link{0-9}+(\.\link{0-9}+)?)|(ter))?(-(\link{0-9XY}+)?((\link{pq}?)|(cen))((ter)|(\link{0-9}+(\.\link{0-9}+)?))?)?)?$"
-\item GENEBANK (Nucleotide) = "^\link[=0-9]{A-Z}{5}$" | "^\link{A-Z}{2}\link{0-9}{6}$"
-\item GENEBANK (Protein) = "^\link{A-Z}{3}\link{0-9}{5}$"
-\item GENEBANK (WGS) = "^\link{A-Z}{4}\link{0-9}{8}\link{0-9}?\link{0-9}?$"
-\item GENEBANK (MGA) = "^\link{A-Z}{5}\link{0-9}{7}$"
+\item ENSEMBL = "^ENSG[0-9]+$"
+\item ENSEMBLTRANS = "^ENST[0-9]+$"
+\item ENSEMBLPROT = "^ENSP[0-9]+$"
+\item ENTREZID = "^[0-9]+$"
+\item IMAGE = "^IMAGE:[0-9]+$"
+\item GOID = "^GO:[0-9]+$"
+\item PFAM = "^PF[0-9]+$"
+\item REFSEQ = "^N[MP]_[0-9]+$"
+\item ENZYME = "^[0-9]+(\\.(([0-9]+)|-)+){3}$"
+\item MAP = "^[0-9XY]+((([pq])|(cen))(([0-9]+(\\.[0-9]+)?)|(ter))?(-([0-9XY]+)?(([pq]?)|(cen))((ter)|([0-9]+(\\.[0-9]+)?))?)?)?$"
+\item GENEBANK (Nucleotide) = "^[A-Z][0-9]{5}$" | "^[A-Z]{2}[0-9]{6}$" 
+\item GENEBANK (Protein) = "^[A-Z]{3}[0-9]{5}$"
+\item GENEBANK (WGS) = "^[A-Z]{4}[0-9]{8}[0-9]?[0-9]?$"
+\item GENEBANK (MGA) = "^[A-Z]{5}[0-9]{7}$"
 \item GENENAME = " "
-\item .Affymetrix = "(^AFFX-)|(^\link{0-9}+}(\link{abfgilrsx}\emph{)?(\link{as}t)|(i))$"
-\item .Illumina = "^ILMN}\link{0-9}+$"
-\item .Agilent = "^A_\link{0-9}+_P\link{0-9}+$"
-\item .nuID = use the function \code{\link{nuIDdecode}} to try converting the
-ids into nucleotide sequences. Identification is positive if no error is
-thrown during the conversion.
+\item .Affymetrix = "(^AFFX-)|(^[0-9]+_([abfgilrsx]_)?([as]t)|(i))$"
+\item .Illumina = "^ILMN_[0-9]+$"
+\item .Agilent = "^A_[0-9]+_P[0-9]+$"
+\item .nuID = use the function \code{\link{nuIDdecode}} to try converting the 
+ids into nucleotide sequences. Identification is positive if no error is 
+thrown during the conversion.  
 }}
 }
 \value{
-a single character string (possibly empty) if \code{each=FALSE} (default)
+a single character string (possibly empty) if \code{each=FALSE} (default) 
 or a character vector of the same "length" as \code{object} otherwise.
 }
 \description{
@@ -130,7 +130,7 @@ expression or a matching function.
 
 
 
-\item \code{vector}: This is the workhorse method that determine the type of ids contained in
+\item \code{vector}: This is the workhorse method that determine the type of ids contained in 
 a character vector.
 
 
