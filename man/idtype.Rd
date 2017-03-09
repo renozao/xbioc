@@ -64,13 +64,13 @@ type cannot be determined.
 
 The IDs can be either:
 \itemize{
-\item probe IDs (e.g. 123456_at or ILMN_123456 for Affymetrix or Illumina 
+\item{probe IDs (e.g. 123456_at or ILMN_123456 for Affymetrix or Illumina 
 chips respectively), the type starts with a dot \code{'.'}, allowing the 
-subsequent handling of such IDs as a group.
-\item other biological ID types, the result are character strings such as 
+subsequent handling of such IDs as a group.}
+\item{other biological ID types, the result are character strings such as 
 those used as attributes in Bioconductor annotation packages 
-(e.g. \code{"ENTREZID"} or \code{"ENSEMBL"})
-\item Names of annotation packages e.g. \code{"hgu133plus2.db"}.
+(e.g. \code{"ENTREZID"} or \code{"ENSEMBL"})}
+\item{Names of annotation packages e.g. \code{"hgu133plus2.db"}.}
 }
 
 This function is able to identify the following ID types using regular 
