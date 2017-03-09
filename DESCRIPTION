@@ -37,5 +37,6 @@ Collate:
     'package.R'
     'platforms.R'
     'plots.R'
+    'stats.R'
 RoxygenNote: 6.0.0.9000
 Roxygen: list(markdown = TRUE, roclets = c('collate', 'namespace', 'roclets::rd2_roclet'))
