@@ -1,7 +1,7 @@
 Package: xbioc
 Type: Package
 Title: Extra Base Functions for Bioconductor
-Version: 0.1.7
+Version: 0.1.8
 Date: 2014-07-03
 Authors@R: person("Renaud", "Gaujoux", role=c('aut', 'cre'),
     email='renaud@tx.technion.ac.il')
@@ -25,12 +25,13 @@ Suggests:
     hgu133plus2.db,
     org.Hs.eg.db
 biocViews: Software
-Collate:
+Collate: 
     'utils.R'
     'AllClasses.R'
     'AllGenerics.R'
     'annotations.R'
     'db-packages.R'
+    'eset-utils.R'
     'flow.R'
     'idtype.R'
     'marray.R'
