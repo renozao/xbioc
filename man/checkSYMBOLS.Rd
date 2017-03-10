@@ -33,7 +33,7 @@ setting, which interpreted them as dates or numeric.
 This issue, although well known in the bioinformatics community, regularly
 surfaces to the detriment of the person who analyses the data.
 It has been reported to affect several publications and even large genomic projects
-(Zeeberg2004, Ziemann et al. (2016)).
+(Zeeberg et al. (2004); Ziemann et al. (2016), Zeeberg et al. (2004); Ziemann et al. (2016)).
 }
 \examples{
 \dontshow{
@@ -53,9 +53,9 @@ checkSYMBOLS(bad_symbols, value = TRUE, replace = TRUE)
 
 }
 \references{
-Zeeberg2004
+Zeeberg BR, Riss J, Kane DW, Bussey KJ, Uchio E, Linehan WM, Barrett JC and Weinstein JN (2004). “No Title.” \emph{BMC
+Bioinformatics}, \emph{5}(1), pp. 80. ISSN 14712105, doi: 10.1186/1471-2105-5-80 (URL: http://doi.org/10.1186/1471-2105-5-80).
 
 Ziemann M, Eren Y and El-osta A (2016). “Gene name errors are widespread in the scientific literature.” \emph{Genome Biology}, pp.
-17-19. ISSN 1474-760X, doi: 10.1186/s13059-016-1044-7 (URL: http://doi.org/10.1186/s13059-016-1044-7), <URL:
-http://dx.doi.org/10.1186/s13059-016-1044-7>.
+17-19. ISSN 1474-760X, doi: 10.1186/s13059-016-1044-7 (URL: http://doi.org/10.1186/s13059-016-1044-7).
 }
