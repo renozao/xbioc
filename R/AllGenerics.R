@@ -64,11 +64,26 @@ setMethod('sampleNames', 'matrix', function(object) colnames(object) )
 setGeneric('exprs', package = 'Biobase')
 
 #' Simply returns \code{object}.
-#' This method is defined so that function can seamlessly handle both matrix and 
+#' This method is defined so the generic can be called on both matrix and 
 #' \code{ExpressionSet} objects.
 #' 
 #' @rdname Bioc-generics
 setMethod('exprs', 'matrix', function(object) object )
+
+#' @export
+#' @rdname Bioc-generics
+setGeneric('exprs<-', package = 'Biobase')
+
+#' Simply assigns `value` to `object`.
+#' This method is defined so the generic can be called on both matrix and 
+#' \code{ExpressionSet} objects.
+#' 
+#' @rdname Bioc-generics
+setReplaceMethod('exprs', 'matrix', function(object, value){
+    object <- value
+    object
+  })
+
 
 #' Enhanced Subsetting for Matrix-like Data 
 #' 
