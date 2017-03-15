@@ -160,6 +160,7 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
         if( is(annotation, 'AnnDbBimap') ){
           x <- bimap_lookup(as.character(x), annotation, multiple = FALSE)
         } else add_id <- FALSE
+        # use annotation from organism (key: ENTREZID)
         db <- biocann_orgdb(annotation)
         annotation <- db$org.db
     }
