@@ -113,6 +113,8 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' @param annotation Annotation package to use.
 #' It can be the name of an annotation package or of an organism supported by 
 #' \code{\link{biocann_orgdb}}. 
+#' 
+#' It can also be a `AnnDbBimap` object that converts the features into `ENTREZID`, e.g., `org.Hs.egSYMBOL2EG`.
 #' @param extras Indicates the type of information/resource to add for each feature.
 #' Out-links to online resource can be added the prefix \code{'~'} to selected resources.
 #' 
@@ -143,9 +145,21 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
         x <- featureNames(x)
     }
     
+    bind_data <- NULL
+    if( is.data.frame(x) ){
+      bind_data <- x
+      x <- rownames(x)
+    }
+    
+    x0 <- x
     use_org <- FALSE
+    add_id <- TRUE
     if( !is.annpkg(annotation) ){
         use_org <- TRUE
+        # assume that it will convert to ENTREZID
+        if( is(annotation, 'AnnDbBimap') ){
+          x <- bimap_lookup(as.character(x), annotation, multiple = FALSE)
+        } else add_id <- FALSE
         db <- biocann_orgdb(annotation)
         annotation <- db$org.db
     }
@@ -156,9 +170,12 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     symb <- bimap_lookup(x, biocann_object('SYMBOL', annotation), multiple = FALSE)
     ez[is.na(symb)] <- NA
     desc <- bimap_lookup(x, biocann_object('GENENAME', annotation), multiple = FALSE)
-    
-    df <- data.frame(ENTREZID = ez, Symbol = symb, Description = desc, stringsAsFactors = FALSE)
-    if( !use_org ) df$ID <- x
+    df <- data.frame(ENTREZID = ez, SYMBOL = symb, Description = desc, stringsAsFactors = FALSE)
+    if( add_id ) df$ID <- x0
+    df <- df[order(match(colnames(df), 'ID'))]
+    if( !is.null(bind_data) ){
+      df <- cbind(df, bind_data)
+    }
     #rownames(df) <- x
     
     # add extra ressource

@@ -12,7 +12,9 @@ geneInfo(x, annotation = "human", extras = c("biogps", "ncbi", "pathway",
 
 \item{annotation}{Annotation package to use.
 It can be the name of an annotation package or of an organism supported by
-\code{\link{biocann_orgdb}}.}
+\code{\link{biocann_orgdb}}.
+
+It can also be a \code{AnnDbBimap} object that converts the features into \code{ENTREZID}, e.g., \code{org.Hs.egSYMBOL2EG}.}
 
 \item{extras}{Indicates the type of information/resource to add for each feature.
 Out-links to online resource can be added the prefix \code{'~'} to selected resources.
