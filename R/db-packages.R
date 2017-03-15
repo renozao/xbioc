@@ -235,6 +235,7 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 #' @param organism Organism name (case insensitive).
 #' Can be specified using the common name (e.g., mouse), a partial match of the latin name (e.g., Mus musculus), 
 #' or its abbreviation (e.g., Mm). 
+#' It can also be a `AnnDbBimap` object like `org.Hs.egSYMBOL2EG`.
 #' 
 #' The following organisms are currently supported:
 #' 
@@ -292,14 +293,16 @@ biocann_orgdb <- local({
     function(organism){
         if( missing(organism) ) return(.map)
         x <- organism
+        if( is(x, 'AnnDbBimap') ) x <- x@objTarget 
         
-        if( x %in% rownames(.map) ) i <- x
-        else if( is.na(i <- match(toupper(x), toupper(.map$organism))) ){
-                if( !length(i <- grep(paste0("^", x), .map$organism, ignore.case = TRUE)) ){
-                        if( is.na(i <- match(toupper(x), toupper(.map$abbrv))) ){
-                                stop("Invalid organism: ", x, "\n  Must be one of: ", str_out(paste0(rownames(.map), " [", .map$abbrv, ']'), Inf, quote = FALSE))
-                        }
-                }
+        if( is.na(i <- match(toupper(x), toupper(rownames(.map)))) ){
+          if( is.na(i <- match(toupper(x), toupper(.map$organism))) ){
+                  if( !length(i <- grep(paste0("^", x), .map$organism, ignore.case = TRUE)) ){
+                          if( is.na(i <- match(toupper(x), toupper(.map$abbrv))) ){
+                                  stop("Invalid organism: ", x, "\n  Must be one of: ", str_out(paste0(rownames(.map), " [", .map$abbrv, ']'), Inf, quote = FALSE))
+                          }
+                  }
+          }
         }
         .map[i, , drop = FALSE]
     }
@@ -347,7 +350,7 @@ bimap_lookup <- function(keys, map, multiple = TRUE){
         res[mk] <- map[mk]
         res
     }
-
+    
     # process multiple matches
     if( !isTRUE(multiple) ){
         if( is_NA(multiple) ){ # set multiple match to NA
@@ -361,7 +364,7 @@ bimap_lookup <- function(keys, map, multiple = TRUE){
     }
     
     if( length(kNA) ){
-        if( isTRUE(multiple) ) res_ <- as.list(res_)
+        if( !is.list(res) ) res_ <- unlist(res_)
         res_[-kNA] <- res
         res <- res_
     }

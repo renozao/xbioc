@@ -10,6 +10,7 @@ biocann_orgdb(organism)
 \item{organism}{Organism name (case insensitive).
 Can be specified using the common name (e.g., mouse), a partial match of the latin name (e.g., Mus musculus),
 or its abbreviation (e.g., Mm).
+It can also be a \code{AnnDbBimap} object like \code{org.Hs.egSYMBOL2EG}.
 
 The following organisms are currently supported:
 
