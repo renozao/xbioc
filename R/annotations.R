@@ -142,9 +142,10 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     # handle ExpressionSet objects
     if( isExpressionSet(x) ){
         if( missing(annotation) || is.null(annotation) ) annotation <- annotation(x)
-        x <- featureNames(x)
+        x <- fData(x)
     }
     
+    # use rownames from data.frame and append/cbind original data at the end 
     bind_data <- NULL
     if( is.data.frame(x) ){
       bind_data <- x
