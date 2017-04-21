@@ -224,15 +224,15 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     } 
     
     if( length(i <- which(extras == 'pathway')) ){
-        library(reactome.db)
-        p <- pid <- bimap_lookup(ez, reactomeEXTID2PATHID)
+        loadNamespace('reactome.db')
+        p <- pid <- bimap_lookup(ez, reactome.db::reactomeEXTID2PATHID)
         # http://pid.nci.nih.gov/search/pathway_landing.shtml?what=graphic&jpg=on&pathway_id=xxxxxx&source=ReactomeImported
         .link <- function(x, id) sprintf('<a target="_pathway" href="http://reactome.org/pathway/%s">%s</a>', id, x)
         if( as_names[i] ){
             p <- sapply(pid, function(x){
                         if( is_NA(x) ) NA
                         else{
-                            pn <- bimap_lookup(x, reactomePATHID2NAME)
+                            pn <- bimap_lookup(x, reactome.db::reactomePATHID2NAME)
                             fpn <- .format(pn, i, .link = .link, id = x, collapse = TRUE)
                             df$Pathway <- unlist(fpn)
                         }

@@ -23,7 +23,8 @@ Imports:
 Suggests:
     repotools,
     hgu133plus2.db,
-    org.Hs.eg.db
+    org.Hs.eg.db,
+    reactome.db
 biocViews: Software
 Collate: 
     'utils.R'
