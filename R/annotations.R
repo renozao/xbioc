@@ -354,10 +354,10 @@ convertAlias <- function(x, nomatch = NA, organism = 'Hs', verbose = TRUE){
   if( !verbose ) message <- function(...) NULL
   
   # load annotation mappings
-  org.pkg <- annotation(organism)
+  org.pkg <- biocann_orgdb_pkgname(organism)
   if( !requireNamespace(org.pkg) )
     stop("Could not resolve gene aliases: missing annotation pacakge ", org.pkg)
-  ALIAS_map <- biocann_map('ALIAS2EG', org.pkg)
+  ALIAS_map <- biocann_object('ALIAS2EG', org.pkg)
   SYMBOL_map <- alias_map <- biocann_object('SYMBOL', org.pkg)
   ##
   
