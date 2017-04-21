@@ -119,7 +119,7 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' Out-links to online resource can be added the prefix \code{'~'} to selected resources.
 #' 
 #' Note that the resources \code{'NCBI'} and \code{'bioGPS'} are \emph{de facto} online resources, 
-#' and make ENTREZID and Symbol as links to the respective gene page. 
+#' and make ENTREZID and SYMBOL as links to the respective gene page. 
 #' 
 #' @seealso \code{\link{biocann_orgdb}}
 #' 
@@ -192,7 +192,7 @@ geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'path
     extras <- match.arg(extras, several.ok = TRUE)
     
     if( length(i <- which(extras %in% c('ncbi', 'biogps'))) ){
-        tolink <- c('ENTREZID', 'Symbol')
+        tolink <- c('ENTREZID', 'SYMBOL')
         olink <- extras[i[1L]]
         base <- switch(olink
                 , biogps = "http://biogps.org/gene/"

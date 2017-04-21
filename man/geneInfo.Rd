@@ -20,7 +20,7 @@ It can also be a \code{AnnDbBimap} object that converts the features into \code{
 Out-links to online resource can be added the prefix \code{'~'} to selected resources.
 
 Note that the resources \code{'NCBI'} and \code{'bioGPS'} are \emph{de facto} online resources,
-and make ENTREZID and Symbol as links to the respective gene page.}
+and make ENTREZID and SYMBOL as links to the respective gene page.}
 }
 \description{
 Simple Feature Annotation
