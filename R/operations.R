@@ -117,7 +117,7 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
         stop("Could not generate ExpressionSet: invalid first element [", class(out), "]")
     #other <- names(objects[[1]]$other)
     # check feature names
-    fn <- sapply0(objects, featureNames)
+    fn <- sapply(objects, featureNames, simplify = FALSE)
     stopifnot(all(sapply(fn , identical, fn[[1L]])))
     # init pheno data
     pd <- pData(out)
@@ -161,6 +161,7 @@ droplevels.ExpressionSet <- function(x, ...){
 }
 
 #' @S3method rbind ExpressionSet 
+#' @importFrom plyr ldply
 #' @export
 rbind.ExpressionSet <- function(..., .id = 'dataType'){
     
@@ -168,7 +169,6 @@ rbind.ExpressionSet <- function(..., .id = 'dataType'){
     if( is.null(names(DATA)) ) names(DATA) <- paste0('dataset', seq_along(DATA))
     if( anyDuplicated(names(DATA)) )
         stop("Invalid expression data list: names should be unique.")
-    qlibrary(plyr)
     # check features do not overlap
     ok <- lapply(names(DATA), function(n){
             lapply(setdiff(names(DATA), n), function(p){
