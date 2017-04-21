@@ -134,7 +134,7 @@ setAnnotation.list <- function(object, value, force = FALSE, ...){
 #' ids <- c("1007_s_at", "1053_at", "117_at", "121_at", "not_a_probe_id")
 #' geneInfo(ids, 'hgu133plus2.db')
 #' geneInfo(ids, 'hgu133plus2.db', extras = 'bioGPS')
-#' geneInfo(ids, 'hgu133plus2.db', extras = 'pathwayID')
+#' geneInfo(ids, 'hgu133plus2.db', extras = 'pathway')
 #' 
 #' 
 geneInfo <- function(x, annotation = 'human', extras = c('biogps', 'ncbi', 'pathway', 'kegg')){
