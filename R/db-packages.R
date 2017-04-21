@@ -294,6 +294,7 @@ biocann_orgdb <- local({
         if( missing(organism) ) return(.map)
         x <- organism
         if( is(x, 'AnnDbBimap') ) x <- x@objTarget 
+        if( !length(x) || !nzchar(x) ) stop('Invalid organism specification: empty variable')
         
         if( is.na(i <- match(toupper(x), toupper(rownames(.map)))) ){
           if( is.na(i <- match(toupper(x), toupper(.map$organism))) ){
@@ -308,7 +309,13 @@ biocann_orgdb <- local({
     }
 })
 
-
+#' @describeIn biocann_orgdb Returns the organism annotation package for a given
+#' organism.
+#' @export
+biocann_orgdb_pkgname <- function(organism){
+  biocann_orgdb(organism)$org.db
+  
+}
 
 
 #' Looking Up Keys in Identifier Maps

@@ -2,9 +2,12 @@
 % Please edit documentation in R/db-packages.R
 \name{biocann_orgdb}
 \alias{biocann_orgdb}
+\alias{biocann_orgdb_pkgname}
 \title{Bioconductor Organism Data and Packages}
 \usage{
 biocann_orgdb(organism)
+
+biocann_orgdb_pkgname(organism)
 }
 \arguments{
 \item{organism}{Organism name (case insensitive).
@@ -19,6 +22,12 @@ human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rh
 \description{
 Bioconductor Organism Data and Packages
 }
+\section{Functions}{
+\itemize{
+\item \code{biocann_orgdb_pkgname}: Returns the organism annotation package for a given
+organism.
+}}
+
 \examples{
 \dontshow{
 options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
