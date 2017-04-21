@@ -325,3 +325,75 @@ checkSYMBOLS <- function(x, value = FALSE, replace = FALSE, quiet = TRUE){
 	i
 }
 
+#' Converts Gene Alias to Official Gene Symbols
+#' 
+#' @param x character vector of gene aliases
+#' @param nomatch value to use for those aliases that could not 
+#' be mapped. 
+#' This argument can also be set to `TRUE` to make unmapped aliases 
+#' keep their original input values.
+#' @param organism name of the reference organism.
+#' Currently only Human ('Hs') is supported.
+#' 
+#' @param verbose logical that indicates if mapped and unmapped symbols
+#' should be output to the `stderr`.
+#' 
+#' @return a character vector of the mapped symbols, whose names correspond to 
+#' the original values in `x`.
+#' 
+#' @export
+#' 
+#' @examples 
+#' 
+#' convertAlias(c('A', 'IL10'))
+#' convertAlias(c('A', 'IL-10', 'IL1RA'))
+#' convertAlias(c('A', 'IL-10', 'IL1RA'), nomatch = TRUE)
+#' 
+convertAlias <- function(x, nomatch = NA, organism = 'Hs', verbose = TRUE){
+  
+  if( !verbose ) message <- function(...) NULL
+  
+  # load annotation mappings
+  org.pkg <- annotation(organism)
+  if( !requireNamespace(org.pkg) )
+    stop("Could not resolve gene aliases: missing annotation pacakge ", org.pkg)
+  ALIAS_map <- biocann_map('ALIAS2EG', org.pkg)
+  SYMBOL_map <- alias_map <- biocann_object('SYMBOL', org.pkg)
+  ##
+  
+  x <- as.character(x)
+  x0 <- x
+  x <- toupper(x)
+  x <- gsub(".", "-", x, fixed = TRUE)
+  x <- gsub(" ", "-", x, fixed = TRUE)
+  
+  map <- setNames(rep(NA_character_, length(x)), x0)
+  .trymap <- function(x, recursive = TRUE){
+    if( anyNA(map) ) map[is.na(map)] <<- bimap_lookup(x[is.na(map)], ALIAS_map, multiple = FALSE)
+    
+    # try shortening greek letters
+    if( recursive ){
+      .trymap(gsub("ALPHA[$ ]?", "A", x), recursive = FALSE)
+      .trymap(gsub("BETA[$ ]?", "B", x), recursive = FALSE)
+      .trymap(gsub("GAMMA[$ ]?", "G", x), recursive = FALSE)
+    }
+  }
+  
+  .trymap(x)
+  # try removing all hyphen
+  .trymap(gsub("-", "", x))
+  # try removing hypen before number
+  .trymap(gsub("-([0-9]+)", "\\1", x))
+  
+  
+  # map to official gene symbol
+  map[!is.na(map)] <- bimap_lookup(map[!is.na(map)], SYMBOL_map, multiple = FALSE)
+  stopifnot(length(x) == length(map) )
+  names(map) <- x0
+  message("Mapped:", str_out(map[!is.na(map) & names(map) != map], Inf, use.names = TRUE, total = TRUE))
+  message("Not found:", str_out(names(map)[is.na(map)], Inf, use.names = TRUE, total = TRUE))
+  if( isTRUE(nomatch) ) map[is.na(map)] <- names(map)[is.na(map)]
+  else if( !is_NA(nomatch) ) map[is.na(map)] <- nomatch
+  
+  map
+}
