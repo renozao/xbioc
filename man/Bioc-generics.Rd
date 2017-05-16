@@ -8,6 +8,8 @@
 \alias{sampleNames<-}
 \alias{exprs}
 \alias{exprs,matrix-method}
+\alias{exprs<-}
+\alias{exprs<-,matrix,ANY-method}
 \title{Extracting Feature Names}
 \usage{
 featureNames(object)
@@ -21,6 +23,10 @@ sampleNames(object) <- value
 exprs(object)
 
 \S4method{exprs}{matrix}(object)
+
+exprs(object) <- value
+
+\S4method{exprs}{matrix,ANY}(object) <- value
 }
 \arguments{
 \item{object}{Object, possibly derived from class \code{eSet}.}
@@ -33,6 +39,10 @@ The \pkg{xbioc} package provides extra methods for the generic
 that extend the original Bioconductor interface.
 
 Simply returns \code{object}.
-This method is defined so that function can seamlessly handle both matrix and
+This method is defined so the generic can be called on both matrix and
+\code{ExpressionSet} objects.
+
+Simply assigns \code{value} to \code{object}.
+This method is defined so the generic can be called on both matrix and
 \code{ExpressionSet} objects.
 }

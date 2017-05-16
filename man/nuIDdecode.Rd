@@ -40,8 +40,7 @@ nuIDdecode('XERDqYYc2F', error=FALSE)
 \references{
 Du P, Kibbe Wa and Lin SM (2007). “nuID: a universal naming scheme of oligonucleotides for illumina, affymetrix, and other
 microarrays.” \emph{Biology direct}, \emph{2}, pp. 16. ISSN 1745-6150, doi: 10.1186/1745-6150-2-16 (URL:
-http://doi.org/10.1186/1745-6150-2-16), <URL:
-http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=1891274&tool=pmcentrez&rendertype=abstract>.
+http://doi.org/10.1186/1745-6150-2-16).
 }
 \author{
 Pan Du

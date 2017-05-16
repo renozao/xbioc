@@ -5,7 +5,7 @@
 \alias{biocann_orgdb_pkgname}
 \title{Bioconductor Organism Data and Packages}
 \usage{
-biocann_orgdb(organism)
+biocann_orgdb(organism, optional = FALSE)
 
 biocann_orgdb_pkgname(organism)
 }
@@ -18,6 +18,9 @@ It can also be a \code{AnnDbBimap} object like \code{org.Hs.egSYMBOL2EG}.
 The following organisms are currently supported:
 
 human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rhesus, worm, zebrafish}
+
+\item{optional}{logical that indicates if the function should raise an error if no package is found
+for the given organism specification (\code{optional=FALSE}), or return \code{NA} data and throw a warning.}
 }
 \description{
 Bioconductor Organism Data and Packages
