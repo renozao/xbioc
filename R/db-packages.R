@@ -240,6 +240,9 @@ biocann_object <- function(to, from=NULL, optional=FALSE){
 #' The following organisms are currently supported:
 #' 
 #' human, arabidopsis, bovine, canine, chicken, chimp, malaria, mouse, pig, rat, rhesus, worm, zebrafish
+#' 
+#' @param optional logical that indicates if the function should raise an error if no package is found
+#' for the given organism specification (`optional=FALSE`), or return `NA` data and throw a warning.
 #'  
 #' @export
 #' @examples
@@ -290,7 +293,7 @@ biocann_orgdb <- local({
     x$db0 <- rownames(x)
     .map <- x[order(rownames(x)), ]
     
-    function(organism){
+    function(organism, optional = FALSE){
         if( missing(organism) ) return(.map)
         x <- organism
         if( is(x, 'AnnDbBimap') ) x <- x@objTarget 
@@ -300,7 +303,9 @@ biocann_orgdb <- local({
           if( is.na(i <- match(toupper(x), toupper(.map$organism))) ){
                   if( !length(i <- grep(paste0("^", x), .map$organism, ignore.case = TRUE)) ){
                           if( is.na(i <- match(toupper(x), toupper(.map$abbrv))) ){
+                                  if( optional ) stop <- warning 
                                   stop("Invalid organism: ", x, "\n  Must be one of: ", str_out(paste0(rownames(.map), " [", .map$abbrv, ']'), Inf, quote = FALSE))
+                                  .map[NA_integer_, , drop = FALSE]
                           }
                   }
           }
@@ -390,4 +395,56 @@ biocann_inp_pkgname <- function(x){
     x <- strsplit(x, " ")[[1]]
     p <- paste0(toupper(substr(x[1],1,1)), tolower(substr(x[2],1,1)))
     p <- paste0('hom.', p, '.inp.db')
+}
+
+
+#' Lists Available Transcript Annotation Packages
+#' 
+#' @param provider name of the annotation provider
+#' 
+#' @importFrom BiocInstaller biocinstallRepos
+#' @export 
+#' 
+available_tx_db <- function(provider = c('all', 'ensembl', 'ucsc'), ...){
+  # fetch available packages from annotation repo
+  pkgs <- available.packages(repos = BiocInstaller::biocinstallRepos()['BioCann'])
+  
+  # add provider
+  prov <- grepl("^TxDb.*UCSC", rownames(pkgs)) + grepl("^EnsDb", rownames(pkgs)) * 2
+  pkgs <- cbind(pkgs, Provider = c(NA, 'UCSC', 'Ensembl')[1 + prov])
+  pkgs <- pkgs[prov > 0, ]
+  
+  # add version
+  org <- substr(sub("^[^.]+\\.([^.]+).*", "\\1", rownames(pkgs)), 1L, 2L)
+  org <- suppressWarnings(sapply(org, function(x) biocann_orgdb(x, optional = TRUE)$organism))
+  pkgs <- cbind(pkgs
+                , Organism = org   
+                , ProviderVersion = sub(".*[^0-9]([0-9]+).*", "\\1", rownames(pkgs)))
+  
+  # filter if necessary
+  provider <- match.arg(provider)
+  if( provider != 'all' ) pkgs <- pkgs[tolower(pkgs[, 'Provider']) == tolower(provider), , drop = FALSE]
+  
+  # return as a data.frame
+  pkgs <- as.data.frame(pkgs, stringsAsFactors = FALSE)
+  pkgs$ProviderVersion <- as.numeric(pkgs$ProviderVersion)
+  
+  pkgs
+  
+}
+
+#' @describeIn available_tx_db
+#' 
+#' @param organism organism specification, as supported by [biocann_orgdb].
+#' 
+#' @export
+ensembldb_latest <- function(organism = 'Hs'){
+
+  org <- biocann_orgdb(organism, optional = TRUE)$organism
+  # return NULL if organism is not supported
+  if( is.na(org) ) return()
+  ens <- available_tx_db('ensembl')
+  ens <- ens[order(ens$ProviderVersion), ]
+  tail(rownames(ens[ens$Organism == org, ]), 1L)
+  
 }
