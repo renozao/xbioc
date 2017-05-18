@@ -400,6 +400,12 @@ nuIDdecode <- function (id, error = TRUE)
         nucleotide <- c("A", "C", "G", "T")
         codon <- nucleotide[codon + 1]
         len <- length(codon)
+        if (len <= cutLen) { # added safeguard
+          msg <- "Coding error or not a nuID!"
+          if( isTRUE(error) ) stop(msg)
+          else if( is.na(error) ) return(NA)
+          else warning(msg)
+        }
         seq <- paste(codon[1:(len - cutLen)], collapse = "")
         return(seq)
     }
