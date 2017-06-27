@@ -79,3 +79,52 @@ NAmap <- function(x){
 }
 
 
+#' Appending Columns to Data Frames
+#' 
+#' This function performs on \code{data.frame} objects a similar operation as 
+#' \code{\link[base]{append}} does on \code{list} objects.
+#' That is it enables prepending/inserting/appending columns at specific positions.
+#' 
+#' @param x a \code{data.frame} object
+#' @param ... variables to be appended to \var{x}.
+#' @param after index or column name after which the new variables should be inserted.
+#' Default is to append the columns at the end of the \code{data.frame}.
+#' @param names optional names for the newly inserted columns.
+#' @param logical that indicates if the newly inserted string variables should be converted to 
+#' factors.
+#' 
+#' @export
+#' @examples 
+#' 
+#' x <- data.frame(a = 1:4, b = letters[1:4])
+#' # append at the end
+#' df_append(x, c = runif(4))
+#' 
+#' # append at the beginning
+#' df_append(x, c = runif(4), after = 0L)
+#' 
+#' # append after first column
+#' df_append(x, c = runif(4), after = 1L)
+#' df_append(x, c = runif(4), after = 'a')
+#' 
+df_append <- function(x, ..., after = length(x), names = NULL, stringsAsFactors = getOption('stringsAsFactors', FALSE)){
+  
+  addon <- data.frame(..., stringsAsFactors = stringsAsFactors)
+  if( isString(after) ) after <- which(colnames(x) == after)
+  if( !length(after) ){
+    warning("Argument 'after' has zero-length: value will be concatenated after last column.")
+    after <- length(x)
+  }
+  n <- length(x)
+  res <- if( after <= 0 ) cbind(addon, x)
+      else if( after >= n ) cbind(x, addon)
+      else cbind(x[seq(after)], addon, x[-seq(after)])
+  
+  # apply colnames if requested
+  if( !is.null(names) ){
+    colnames(res)[seq(after+1, after+length(addon))] <- names
+  }
+  
+  res
+  
+}
