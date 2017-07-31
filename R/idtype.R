@@ -84,9 +84,9 @@ setMethod('idtype', 'missing'
         # type matching patterns/functions
         .defs <- list(
                 UNIGENE="^[A-Z][a-z]\\.[0-9]+$"
-                , ENSEMBL="^ENSG[0-9]+$"
-                , ENSEMBLTRANS="^ENST[0-9]+$"
-                , ENSEMBLPROT="^ENSP[0-9]+$"
+                , ENSEMBL= NA_character_
+                , ENSEMBLTRANS= NA_character_
+                , ENSEMBLPROT= NA_character_
                 , ENTREZID="^[0-9]+$"
                 , IMAGE = "^IMAGE:[0-9]+$"
                 , GOID="^GO:[0-9]+$"
@@ -108,6 +108,16 @@ setMethod('idtype', 'missing'
         
         # actual function
         function(object, def=FALSE){
+            # load ENSEMBL prefixes from data table if needed
+            if( is_NA(.defs$ENSEMBL) ){
+              d <- ldata('ENSEMBL_prefix', package = 'xbioc')
+              pref <- paste0(as.character(d$Prefix), collapse = '|')
+              .defs$ENSEMBL <<- sprintf("^(%s)G[0-9]+$", pref)
+              .defs$ENSEMBLTRANS <<- sprintf("^(%s)T[0-9]+$", pref)
+              .defs$ENSEMBLPROT <<- sprintf("^(%s)P[0-9]+$", pref)
+              
+            }
+            
             if( isFALSE(def) ) unique(names(.defs))
             else if( isTRUE(def) ) .defs
             else if( is.vector(def) ){
