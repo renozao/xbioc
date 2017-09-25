@@ -367,7 +367,9 @@ convertAlias <- function(x, nomatch = NA, organism = 'Hs', verbose = TRUE){
   x <- gsub(".", "-", x, fixed = TRUE)
   x <- gsub(" ", "-", x, fixed = TRUE)
   
-  map <- setNames(rep(NA_character_, length(x)), x0)
+  # first populate mapping with the elements that are already valid/official SYMBOLs
+  map <- setNames(bimap_lookup(x, revmap(SYMBOL_map), multiple = NA), x0)
+  
   .trymap <- function(x, recursive = TRUE){
     if( anyNA(map) ) map[is.na(map)] <<- bimap_lookup(x[is.na(map)], ALIAS_map, multiple = FALSE)
     
