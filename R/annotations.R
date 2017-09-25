@@ -392,8 +392,11 @@ convertAlias <- function(x, nomatch = NA, organism = 'Hs', verbose = TRUE){
   map[!is.na(map)] <- bimap_lookup(map[!is.na(map)], SYMBOL_map, multiple = FALSE)
   stopifnot(length(x) == length(map) )
   names(map) <- x0
-  message("Mapped:", str_out(map[!is.na(map) & names(map) != map], Inf, use.names = TRUE, total = TRUE))
-  message("Not found:", str_out(names(map)[is.na(map)], Inf, use.names = TRUE, total = TRUE))
+  
+  if( any(was_mapped <- !is.na(map) & names(map) != map) ) 
+    message("Mapped:", str_out(map[was_mapped], Inf, use.names = TRUE, total = TRUE))
+  if( any(was_not_found <- is.na(map)) ) 
+    message("Not found:", str_out(names(map)[was_not_found], Inf, use.names = TRUE, total = TRUE))
   if( isTRUE(nomatch) ) map[is.na(map)] <- names(map)[is.na(map)]
   else if( !is_NA(nomatch) ) map[is.na(map)] <- nomatch
   
