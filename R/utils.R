@@ -34,6 +34,10 @@ is_logscale <- function(x){
     ex <- if( isExpressionSet(x) ) exprs(x) else x
     # check log2 transform
     #ex <- exprs(gset)
+
+    # move negative values to positive
+    if (any(ex < 0)) ex <- ex - min(ex)
+
     qx <- as.numeric(quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm=T))
     LogC <- (qx[5] > 100) ||
             (qx[6]-qx[1] > 50 && qx[2] > 0) ||
