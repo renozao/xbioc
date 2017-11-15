@@ -36,7 +36,7 @@ is_logscale <- function(x){
     #ex <- exprs(gset)
 
     # move negative values to positive
-    if (any(ex < 0)) ex <- ex - min(ex)
+    if (any(ex < 0, na.rm = TRUE)) ex <- ex - min(ex, na.rm = TRUE)
 
     qx <- as.numeric(quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm=T))
     LogC <- (qx[5] > 100) ||
