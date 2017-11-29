@@ -209,8 +209,8 @@ rbind.ExpressionSet <- function(..., .id = 'dataType'){
     fd <- fd[setdiff(names(fd), nameCol)]
     
     # build object
-    ExpressionSet(mat, phenoData = AnnotatedDataFrame(pd[colnames(mat), ])
-            , featureData = AnnotatedDataFrame(fd[rownames(mat), ])
+    ExpressionSet(mat, phenoData = AnnotatedDataFrame(pd[colnames(mat), , drop = FALSE])
+            , featureData = AnnotatedDataFrame(fd[rownames(mat), , drop = FALSE])
         )
     
 }
