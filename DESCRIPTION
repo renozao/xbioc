@@ -1,7 +1,7 @@
 Package: xbioc
 Type: Package
 Title: Extra Base Functions for Bioconductor
-Version: 0.1.10
+Version: 0.1.11
 Date: 2017-09-25
 Authors@R: person("Renaud", "Gaujoux", role=c('aut', 'cre'),
     email='renaud@tx.technion.ac.il')
@@ -19,7 +19,9 @@ Imports:
     stats,
     pkgmaker (>= 0.26.6),
     plyr,
-    stringr
+    stringr,
+    reshape2,
+    BiocInstaller
 Suggests:
     repotools,
     hgu133plus2.db,

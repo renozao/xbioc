@@ -41,3 +41,56 @@ setMethod('pVar', signature(object = 'ExpressionSet'),
 
 
 
+
+#' Melt an ExpressionSet for Use with ggplot 
+#' 
+#' Melt the expression data of an \code{\link[Biobase]{ExpressionSet}}, 
+#' also binding any corresponding phenotypic data.
+#' 
+#' @param data an \code{ExpressionSet} object.
+#' @param ... other data types to be melt.
+#' Named arguments, will result in separate variables in the returned \code{data.frame}.
+#' @param pData phenotypic data to attach to the result \code{data.frame}.
+#' @inheritParams reshape2::melt
+#' @param extra list of other matrix-like data to melt and `rbind.fill` to the melted primary data.
+#' 
+#' @import reshape2
+#' @export
+melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, value.name = "value", extra = list()){
+  
+  # melt expression data
+  if( missing(pData) && hasMethod('pData', class(data)) ){
+    pd <- getFunction('pData')(data)
+  }else if( !missing(pData) ) pd <- pData
+  
+  X <- exprs(data)
+  df <- melt(X, na.rm = na.rm, value.name = value.name, ...)
+  
+  if( length(extra) ){
+    if( is.null(names(extra)) ) names(extra) <- rep('', length(extra))
+    mextra <- ldply(seq_along(extra), function(i, ...){
+          n <- names(extra)[i]
+          dx <- extra[[i]]
+          if( ncol(dx) != ncol(data) ) 
+            stop(sprintf("Invalid %i-th extra data [%s]: number of column [%i] does not match those from data [%i]", i, n, ncol(dx), ncol(data)))
+          if( !nzchar(n) ) n <- colnames(df)[1]
+          # force column names from data
+          colnames(dx) <- colnames(data)
+          # melt
+          res <- melt(dx, na.rm = na.rm, value.name = value.name, ...)
+          # force same name for data column variable
+          colnames(res)[1:2] <- c(n, colnames(df)[2])
+          res
+        }, ...)
+    # add to result
+    df <- rbind.fill(df, mextra)
+  }
+  
+  # match pheno data
+  i <- match(df[[2L]], colnames(data))
+  stopifnot( !anyNA(i) )
+  pd <- pd[i, , drop = FALSE]
+  rownames(pd) <- NULL
+  cbind(df, pd)
+  
+}
