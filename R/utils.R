@@ -46,7 +46,7 @@ is_logscale <- function(x, robust = TRUE, extremes = c(0.02, 0.98)){
     # remove extreme values 
     if( robust ){
       stopifnot( length(extremes) == 2L )
-      q_extreme <- quantile(ex, probs = sort(extremes))
+      q_extreme <- quantile(ex, probs = sort(extremes), na.rm = TRUE)
       ex[ex < q_extreme[1L]] <- NA_real_
       ex[ex > q_extreme[2L]] <- NA_real_
       
