@@ -4,13 +4,13 @@
 \alias{melt.ExpressionSet}
 \title{Melt an ExpressionSet for Use with ggplot}
 \usage{
-melt.ExpressionSet(data, ..., pData = pData(data), na.rm = FALSE,
+\method{melt}{ExpressionSet}(data, ..., pData = pData(data), na.rm = FALSE,
   value.name = "value", extra = list())
 }
 \arguments{
 \item{data}{an \code{ExpressionSet} object.}
 
-\item{...}{other data types to be melt.
+\item{...}{arguments passed to \link[reshape2:melt.array]{reshape2::melt.array}.
 Named arguments, will result in separate variables in the returned \code{data.frame}.}
 
 \item{pData}{phenotypic data to attach to the result \code{data.frame}.}

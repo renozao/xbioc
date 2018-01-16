@@ -48,7 +48,7 @@ setMethod('pVar', signature(object = 'ExpressionSet'),
 #' also binding any corresponding phenotypic data.
 #' 
 #' @param data an \code{ExpressionSet} object.
-#' @param ... other data types to be melt.
+#' @param ... arguments passed to [reshape2::melt.array].
 #' Named arguments, will result in separate variables in the returned \code{data.frame}.
 #' @param pData phenotypic data to attach to the result \code{data.frame}.
 #' @inheritParams reshape2::melt
@@ -68,7 +68,7 @@ melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, va
   
   if( length(extra) ){
     if( is.null(names(extra)) ) names(extra) <- rep('', length(extra))
-    mextra <- ldply(seq_along(extra), function(i, ...){
+    mextra <- ldply(seq_along(extra), function(i){
           n <- names(extra)[i]
           dx <- extra[[i]]
           if( ncol(dx) != ncol(data) ) 
@@ -77,11 +77,11 @@ melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, va
           # force column names from data
           colnames(dx) <- colnames(data)
           # melt
-          res <- melt(dx, na.rm = na.rm, value.name = value.name, ...)
+          res <- melt(dx, na.rm = na.rm, value.name = value.name)
           # force same name for data column variable
           colnames(res)[1:2] <- c(n, colnames(df)[2])
           res
-        }, ...)
+        })
     # add to result
     df <- rbind.fill(df, mextra)
   }
