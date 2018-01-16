@@ -19,6 +19,11 @@ NULL
 #' heuristic to work correctly.
 #' 
 #' @param x a numeric data object (matrix, vector, ExpressionSet) 
+#' @param robust logical that indicates if the decision should be 
+#' done robustly by removing the more extreme values.
+#' @param extremes a length-2 numeric vector that gives the lower and upper 
+#' quantiles used to remove extreme values. 
+#' Only relevant when `robust = TRUE`.
 #' 
 #' @source \url{www.ncbi.org/geo}
 #' 
@@ -29,7 +34,7 @@ NULL
 #' is_logscale(x)
 #' is_logscale(log_transform(x))
 #' 
-is_logscale <- function(x){
+is_logscale <- function(x, robust = TRUE, extremes = c(0.02, 0.98)){
     
     ex <- if( isExpressionSet(x) ) exprs(x) else x
     # check log2 transform
@@ -37,14 +42,33 @@ is_logscale <- function(x){
 
     # move negative values to positive
     if (any(ex < 0, na.rm = TRUE)) ex <- ex - min(ex, na.rm = TRUE)
+    
+    # remove extreme values 
+    if( robust ){
+      stopifnot( length(extremes) == 2L )
+      q_extreme <- quantile(ex, probs = sort(extremes))
+      ex[ex < q_extreme[1L]] <- NA_real_
+      ex[ex > q_extreme[2L]] <- NA_real_
+      
+    }
+    ##
 
-    qx <- as.numeric(quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm=T))
+    qx <- as.numeric(quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm = TRUE))
     LogC <- (qx[5] > 100) ||
             (qx[6]-qx[1] > 50 && qx[2] > 0) ||
             (qx[2] > 0 && qx[2] < 1 && qx[4] > 1 && qx[4] < 2)
     !LogC
 #	if (LogC) { ex[which(ex <= 0)] <- NaN
 #		exprs(gset) <- log2(ex) }
+}
+
+#' @describeIn is_logscale tests if there are outliers to the log-scale distribution.
+#' @param ... other arguments passed to [is_logscale], like argument `extremes`
+#' to control the extreme values that are removed.
+#' @export 
+has_logscale_outliers <- function(x, ...){
+  is_logscale(x, robust = TRUE, ...) != is_logscale(x, robust = FALSE, ...)
+  
 }
 
 #' \code{log_transform} apply a log transformation to the data.

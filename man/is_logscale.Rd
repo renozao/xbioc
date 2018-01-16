@@ -2,18 +2,31 @@
 % Please edit documentation in R/utils.R
 \name{is_logscale}
 \alias{is_logscale}
+\alias{has_logscale_outliers}
 \alias{log_transform}
 \title{Detect Log-transformed Data}
 \source{
 \url{www.ncbi.org/geo}
 }
 \usage{
-is_logscale(x)
+is_logscale(x, robust = TRUE, extremes = c(0.02, 0.98))
+
+has_logscale_outliers(x, ...)
 
 log_transform(x, base = 2)
 }
 \arguments{
 \item{x}{a numeric data object (matrix, vector, ExpressionSet)}
+
+\item{robust}{logical that indicates if the decision should be
+done robustly by removing the more extreme values.}
+
+\item{extremes}{a length-2 numeric vector that gives the lower and upper
+quantiles used to remove extreme values.
+Only relevant when \code{robust = TRUE}.}
+
+\item{...}{other arguments passed to \link{is_logscale}, like argument \code{extremes}
+to control the extreme values that are removed.}
 
 \item{base}{log base to use.}
 }
@@ -28,6 +41,11 @@ Negative values get assigned the value \code{\link{NaN}}.
 The data needs to be of reasonable size and variance for the detection
 heuristic to work correctly.
 }
+\section{Functions}{
+\itemize{
+\item \code{has_logscale_outliers}: tests if there are outliers to the log-scale distribution.
+}}
+
 \examples{
 \dontshow{
 options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
