@@ -121,6 +121,8 @@ NAmap <- function(x){
 #' @param stringsAsFactors logical that indicates if the newly inserted string variables should be converted to 
 #' factors.
 #' 
+#' @return a `data.frame`
+#' 
 #' @export
 #' @examples 
 #' 

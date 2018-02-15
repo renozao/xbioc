@@ -20,6 +20,9 @@ Default is to append the columns at the end of the \code{data.frame}.}
 \item{stringsAsFactors}{logical that indicates if the newly inserted string variables should be converted to
 factors.}
 }
+\value{
+a \code{data.frame}
+}
 \description{
 This function performs on \code{data.frame} objects a similar operation as
 \code{\link[base]{append}} does on \code{list} objects.
