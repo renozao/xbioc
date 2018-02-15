@@ -62,11 +62,14 @@ setMethod('exp', 'ExpressionSet', function(x) expb(x) )
 #' \code{range} computes the range of expression values from 
 #' \code{\link{ExpressionSet}} objects.
 #' 
+#' @param na.rm logical that indicates if missing values should be omitted from the
+#' computation.
+#' 
 #' @export
 #' @rdname ExpressionSet-compute
 setMethod('range', 'ExpressionSet'
         , function(x, ..., na.rm = FALSE){
-            range(exprs(x), ..., na.rm=na.rm)
+            range(exprs(x), ..., na.rm = na.rm)
         }
 )
 

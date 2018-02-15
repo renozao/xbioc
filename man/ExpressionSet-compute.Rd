@@ -24,6 +24,9 @@ expb(x, ...)
 
 \item{...}{extra arguments passed to subsequent calls, usually of the corresponding
 method in the \pkg{stats} package.}
+
+\item{na.rm}{logical that indicates if missing values should be omitted from the
+computation.}
 }
 \description{
 The \pkg{xbioc} package defines some generics and methods to apply numeric transformations

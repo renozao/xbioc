@@ -118,7 +118,7 @@ NAmap <- function(x){
 #' @param after index or column name after which the new variables should be inserted.
 #' Default is to append the columns at the end of the \code{data.frame}.
 #' @param names optional names for the newly inserted columns.
-#' @param logical that indicates if the newly inserted string variables should be converted to 
+#' @param stringsAsFactors logical that indicates if the newly inserted string variables should be converted to 
 #' factors.
 #' 
 #' @export

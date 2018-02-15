@@ -17,7 +17,7 @@ Default is to append the columns at the end of the \code{data.frame}.}
 
 \item{names}{optional names for the newly inserted columns.}
 
-\item{logical}{that indicates if the newly inserted string variables should be converted to
+\item{stringsAsFactors}{logical that indicates if the newly inserted string variables should be converted to
 factors.}
 }
 \description{
