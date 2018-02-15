@@ -156,3 +156,30 @@ df_append <- function(x, ..., after = length(x), names = NULL, stringsAsFactors 
   res
   
 }
+
+#' Computing a Short Digest String
+#' 
+#' @param x an object
+#' @param n a single integer/numeric that indicates the desired length of the digest string.
+#' Use `n = Inf` to obtain full digest strings.
+#' @param ... other arguments passed to [digest::digest]
+#' 
+#' @return a character vector of digest strings.
+#' 
+#' @importFrom digest digest
+#' @export 
+#' @examples
+#' 
+#' x <- list(1, 2, 3)
+#' digestN(x)
+#' # longer diest
+#' digestN(x, 15)
+#' # full digest
+#' digestN(x, Inf)
+#' 
+digestN <- function(x, n = 7, ...){
+  d <- digest(x, ...)
+  if( is.finite(n) ) d <- substr(d, 1, n)
+  d
+  
+}
