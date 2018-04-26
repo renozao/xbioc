@@ -165,8 +165,13 @@ droplevels.ExpressionSet <- function(x, ...){
 
 #' @S3method rbind ExpressionSet 
 #' @importFrom plyr ldply
+#' @import assertthat
 #' @export
-rbind.ExpressionSet <- function(..., .id = 'dataType'){
+rbind.ExpressionSet <- function(..., .id = 'dataType', prefix_size = 0L){
+    
+    # check arguments
+    assert_that(is.number(prefix_size) && prefix_size >= 0)
+    ##
     
     DATA <- list(...)
     if( is.null(names(DATA)) ) names(DATA) <- paste0('dataset', seq_along(DATA))
@@ -200,7 +205,7 @@ rbind.ExpressionSet <- function(..., .id = 'dataType'){
     rownames(pd) <- pd[[nameCol]]
     pd <- pd[setdiff(names(pd), nameCol)]
     
-    # extract and bind fetaure data
+    # extract and bind feature data
     fd <- ldply(DATA, function(x){
         fd <- fData(x)
         fd[[.id]] <- NULL
@@ -212,8 +217,18 @@ rbind.ExpressionSet <- function(..., .id = 'dataType'){
     fd <- fd[setdiff(names(fd), nameCol)]
     
     # build object
-    ExpressionSet(mat, phenoData = AnnotatedDataFrame(pd[colnames(mat), , drop = FALSE])
+    eset <- ExpressionSet(mat, phenoData = AnnotatedDataFrame(pd[colnames(mat), , drop = FALSE])
             , featureData = AnnotatedDataFrame(fd[rownames(mat), , drop = FALSE])
         )
+        
+    # append prefix to feature names if requested
+    if( prefix_size ){
+      blocks <- as.character(fData(eset)[[.id]])
+      max_l <- max(nchar(blocks))
+      pref <- substring(blocks, 1L, min(max_l, prefix_size))
+      featureNames(eset) <- paste0(pref, '__', featureNames(eset))
+      
+    }
     
+    eset
 }
