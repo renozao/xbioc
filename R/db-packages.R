@@ -29,8 +29,11 @@ is.annpkg <- function(x) is.character(x) && length(x)>0L && all(grepl("\\.db$", 
 #' @rdname annotation-tools
 #' @export
 is.orgpkg <- function(x) {
-    ann <- annotation(x)
-    !is.null(ann) && length(grep("^org\\.", ann)) == 1
+  
+    if( is.anndb(x) ) return(is(x, 'OrgDb'))
+    if( !is.character(x) ) x <- annotation(x)
+    !is.null(x) && length(grep("^org\\.", x)) == 1
+    
 }
 
 #' \code{is.anndb} tells if an object is an annotation db object such as 
