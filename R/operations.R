@@ -165,7 +165,7 @@ droplevels.ExpressionSet <- function(x, ...){
 
 #' @S3method rbind ExpressionSet 
 #' @importFrom plyr ldply
-#' @import assertthat
+#' @importFrom assertthat assert_that is.number
 #' @export
 rbind.ExpressionSet <- function(..., .id = 'dataType', prefix_size = 0L){
     

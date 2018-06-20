@@ -13,9 +13,13 @@ NULL
 
 #' Generic Bioconductor Utilities
 #' 
-#' \code{isExpressionSet} tells if an object inherits from the class \code{\link[Biobase]{ExpressionSet}}.
-#' 
-#' @param x object 
+#' Utilities to test Bioconductor object classes.
+#'
+#' @name bioc-utils
+NULL
+
+#' @describeIn bioc-utils tells if an object inherits from the class [Biobase::ExpressionSet]. 
+#' @param x object
 #' @export
 isExpressionSet <- function(x){
     is(x, 'ExpressionSet')
@@ -24,9 +28,8 @@ isExpressionSet <- function(x){
 # union class for matrix-like data
 setClassUnion('MatrixData', c('matrix', 'ExpressionSet'))
 
-#' \code{isExpressionSet} tells if an object is a matrix-like data.
+#' @describeIn bioc-utils tells if an object is a matrix-like data.
 #' @export
-#' @rdname isExpressionSet
 isMatrixData <- function(x){
     is(x, 'MatrixData') || isExpressionSet(x)
 }

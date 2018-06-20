@@ -15,20 +15,16 @@ NULL
 #' 
 #' @inheritParams Biobase::featureNames
 #' 
-#' @rdname Bioc-generics
-#' @export
-#' @inline
 setGeneric('featureNames', package='Biobase')
 
-#' @rdname Bioc-generics
-#' @export
-#' @inline
 setGeneric('featureNames<-', package='Biobase')
 
-#' Returns the row names of \code{object}.
+#' @describeIn featureNames Returns the row names of \code{object}.
+#' @export
 setMethod('featureNames', 'matrix', function(object) rownames(object) )
 
-#' Set the row names of \code{object}.
+#' @describeIn featureNames Set the row names of \code{object}.
+#' @export
 setReplaceMethod('featureNames', 'matrix', 
    function(object, value){
         rownames(object) <- value
@@ -36,18 +32,13 @@ setReplaceMethod('featureNames', 'matrix',
    }
 )
 
-#' @rdname Bioc-generics
-#' @export
-#' @inline
 setGeneric('sampleNames', package='Biobase')
 
-#' @rdname Bioc-generics
-#' @export
-#' @inline
 setGeneric('sampleNames<-', package='Biobase')
 
-#' Set the row names of \code{object}.
+#' @describeIn featureNames Set the row names of \code{object}.
 #' @aliases sampleNames,matrix,ANY
+#' @export
 setReplaceMethod('sampleNames', 'matrix', 
     function(object, value){
         colnames(object) <- value
@@ -56,29 +47,26 @@ setReplaceMethod('sampleNames', 'matrix',
 )
 
 
-#' Returns the column names of \code{object}.
+#' @describeIn featureNames Returns the column names of \code{object}.
+#' @export
 setMethod('sampleNames', 'matrix', function(object) colnames(object) )
 
-#' @export
-#' @rdname Bioc-generics
 setGeneric('exprs', package = 'Biobase')
 
-#' Simply returns \code{object}.
+#' @describeIn featureNames Simply returns \code{object}.
 #' This method is defined so the generic can be called on both matrix and 
 #' \code{ExpressionSet} objects.
 #' 
-#' @rdname Bioc-generics
+#' @export
 setMethod('exprs', 'matrix', function(object) object )
 
-#' @export
-#' @rdname Bioc-generics
 setGeneric('exprs<-', package = 'Biobase')
 
-#' Simply assigns `value` to `object`.
+#' @describeIn featureNames Simply assigns `value` to `object`.
 #' This method is defined so the generic can be called on both matrix and 
 #' \code{ExpressionSet} objects.
 #' 
-#' @rdname Bioc-generics
+#' @export
 setReplaceMethod('exprs', 'matrix', function(object, value){
     object <- value
     object
