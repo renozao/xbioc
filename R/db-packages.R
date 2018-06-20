@@ -97,8 +97,13 @@ biocann_pkgname <- function(x, noext=FALSE){
         stop("Invalid argument `x`: character string expected [", class(x), ']')
     
     base <- sub("\\.db$", "", x)
-    if( noext ) base 
-    else ifelse(nchar(base), paste(base, ".db", sep=''), '')
+    res <- if( noext ) base 
+           else ifelse(nchar(base), paste(base, ".db", sep=''), '')
+    
+    # fix some special cases
+    res[res %in% c("ensembldb.db")] <- "ensembldb"
+    
+    res
     
 }
 #' \code{biocann_pkgobject} retrieve the \code{AnnotationDb} object for an annotation
