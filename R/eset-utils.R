@@ -59,6 +59,7 @@ setMethod('pVar', signature(object = 'ExpressionSet'),
 melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, value.name = "value", extra = list()){
   
   # melt expression data
+  pd <- NULL
   if( missing(pData) && hasMethod('pData', class(data)) ){
     pd <- getFunction('pData')(data)
   }else if( !missing(pData) ) pd <- pData
@@ -87,10 +88,14 @@ melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, va
   }
   
   # match pheno data
-  i <- match(df[[2L]], colnames(data))
-  stopifnot( !anyNA(i) )
-  pd <- pd[i, , drop = FALSE]
-  rownames(pd) <- NULL
-  cbind(df, pd)
+  if( !is.null(pd) ){
+    i <- match(df[[2L]], colnames(data))
+    stopifnot( !anyNA(i) )
+    pd <- pd[i, , drop = FALSE]
+    rownames(pd) <- NULL
+    df <- cbind(df, pd)
+  }
+  
+  df
   
 }
