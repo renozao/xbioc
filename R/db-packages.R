@@ -102,6 +102,8 @@ biocann_pkgname <- function(x, noext=FALSE){
     
     # fix some special cases
     res[res %in% c("ensembldb.db")] <- "ensembldb"
+    is_EnsDb <- grepl("^EnsDb\\..*\\.v[0-9]+$", x)
+    res[is_EnsDb] <- x[is_EnsDb]
     
     res
     
