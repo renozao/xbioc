@@ -412,12 +412,12 @@ biocann_inp_pkgname <- function(x){
 #' 
 #' @param provider name of the annotation provider
 #' 
-#' @importFrom BiocInstaller biocinstallRepos
+#' @importFrom BiocManager repositories
 #' @export 
 #' 
 available_tx_db <- function(provider = c('all', 'ensembl', 'ucsc'), ...){
   # fetch available packages from annotation repo
-  pkgs <- available.packages(repos = BiocInstaller::biocinstallRepos()['BioCann'])
+  pkgs <- available.packages(repos = BiocManager::repositories()['BioCann'])
   
   # add provider
   prov <- grepl("^TxDb.*UCSC", rownames(pkgs)) + grepl("^EnsDb", rownames(pkgs)) * 2
