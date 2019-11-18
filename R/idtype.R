@@ -112,9 +112,9 @@ setMethod('idtype', 'missing'
             if( is_NA(.defs$ENSEMBL) ){
               d <- ldata('ENSEMBL_prefix', package = 'xbioc')
               pref <- paste0(as.character(d$Prefix), collapse = '|')
-              .defs$ENSEMBL <<- sprintf("^(%s)G[0-9]+$", pref)
-              .defs$ENSEMBLTRANS <<- sprintf("^(%s)T[0-9]+$", pref)
-              .defs$ENSEMBLPROT <<- sprintf("^(%s)P[0-9]+$", pref)
+              .defs$ENSEMBL <<- sprintf("^(%s)G[0-9]+(\\.[0-9]+.*)?$", pref)
+              .defs$ENSEMBLTRANS <<- sprintf("^(%s)T[0-9]+(\\.[0-9]+.*)?$", pref)
+              .defs$ENSEMBLPROT <<- sprintf("^(%s)P[0-9]+(\\.[0-9]+.*)?$", pref)
               
             }
             
