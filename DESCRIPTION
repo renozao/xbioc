@@ -1,10 +1,10 @@
 Package: xbioc
 Type: Package
 Title: Extra Base Functions for Bioconductor
-Version: 0.1.18
-Date: 2019-11-18
+Version: 0.1.19
+Date: 2020-08-28
 Authors@R: person("Renaud", "Gaujoux", role=c('aut', 'cre'),
-    email='renaud@tx.technion.ac.il')
+    email='renozao@protonmail.com')
 Description: Provides extra utility functions to perform common tasks in
     the analysis of omic data, leveraging and enhancing features provided
     by Bioconductor packages.
