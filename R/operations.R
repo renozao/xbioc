@@ -77,8 +77,8 @@ setMethod('range', 'ExpressionSet'
 #' \code{\link{ExpressionSet}} objects.
 #'
 #' @importFrom stats quantile
-#' @S3method quantile ExpressionSet
 #' @rdname ExpressionSet-compute
+#' @export
 quantile.ExpressionSet <- function(x, ...){
     quantile(exprs(x), ...)
 }
@@ -103,7 +103,6 @@ quantile.ExpressionSet <- function(x, ...){
 #'
 #' @return an \code{ExpressionSet} object
 #'
-#' @S3method cbind ExpressionSet
 #' @importFrom plyr rbind.fill.matrix
 #' @export
 cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
@@ -155,7 +154,7 @@ cbind.ExpressionSet <- function(..., .id = '.id', deparse.level = 1){
 }
 
 
-#' @S3method droplevels ExpressionSet
+#' @export
 droplevels.ExpressionSet <- function(x, ...){
     # drop levels from annotation data
     pData(x) <- droplevels(pData(x))
@@ -164,7 +163,6 @@ droplevels.ExpressionSet <- function(x, ...){
     x
 }
 
-#' @S3method rbind ExpressionSet
 #' @importFrom plyr ldply
 #' @importFrom assertthat assert_that is.number
 #' @export
