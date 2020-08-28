@@ -29,13 +29,13 @@ setMethod('pVar', signature(object = 'matrix'),
 #' @describeIn pVar either return `x` or the phenotypic variable `pData(object)[[x]]`
 #' if it exists.
 setMethod('pVar', signature(object = 'ExpressionSet'), 
-    function(object, x, check = TRUE, ...){
+    function(object, x){
       if( isString(x) ){
         if( !x %in% varLabels(object) )
           stop(sprintf("Could not find phenotypic variable '%s' in ExpressionSet object.", x))
         x <- object[[x]]
       }
-      callGeneric(object = exprs(object), x = x, ...)
+      callGeneric(object = exprs(object), x = x)
       
     })
 
