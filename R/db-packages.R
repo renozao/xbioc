@@ -13,11 +13,13 @@
 #' working with Bioconductor annotations, which extends or enhance functions
 #' available in packages such as \pkg{annotate}.
 #' 
-#' \code{is.annpkg} tells if an object is the name of an annotation package.
-#' 
 #' @param x an R object, either a character string or an annotation object.
 #' 
-#' @rdname annotation-tools
+#' @name annotation-tools
+NULL
+
+#' @describeIn annotation-tools \code{is.annpkg} tells if an object is the name of an annotation package.
+#' 
 #' @export
 #' @examples
 #' # check annotation pkg name
@@ -26,7 +28,7 @@
 #' is.annpkg(c('ddd', 'eee.db'))
 is.annpkg <- function(x) is.character(x) && length(x)>0L && all(grepl("\\.db$", x))
 
-#' @rdname annotation-tools
+#' @describeIn annotation-tools tells if an object is an organism annotation package.
 #' @export
 is.orgpkg <- function(x) {
   
@@ -36,10 +38,9 @@ is.orgpkg <- function(x) {
     
 }
 
-#' \code{is.anndb} tells if an object is an annotation db object such as 
+#' @describeIn annotation-tools tells if an object is an annotation db object such as 
 #' \code{hgu133a.db}.
 #' 
-#' @rdname annotation-tools
 #' @export
 #' @examples
 #' # check AnnotationDb object
@@ -47,7 +48,7 @@ is.orgpkg <- function(x) {
 #' is.anndb(hgu133plus2.db)
 is.anndb <- function(x) is(x, 'AnnotationDb')
 
-#' \code{biocann_mapname} returns the name of a map in an annotation package.
+#' @describeIn annotation-tools returns the name of a map in an annotation package.
 #' 
 #' @param annotation names of an annotation package, with \dQuote{.db} 
 #' suffix or not.
@@ -56,7 +57,6 @@ is.anndb <- function(x) is(x, 'AnnotationDb')
 #' returned, and only the simple concatenation of the annotation 
 #' package's name without \dQuote{.db} and the map name.
 #' 
-#' @rdname annotation-tools
 #' @export
 #' @examples
 #' # build annotation bimap object names
@@ -73,13 +73,12 @@ biocann_mapname <- function(annotation, map, all=FALSE){
     paste(base, sep, map, sep='')
     
 }
-#' \code{biocann_pkgname} returns the name of an annotation package, formated from character strings
+#' @describeIn annotation-tools returns the name of an annotation package, formated from character strings
 #' or extracted from annotation objects.
 #' 
 #' @param noext logical that indicates if returned package names should 
 #' contain the extension '.db'.
 #' 
-#' @rdname annotation-tools
 #' @export
 #' @examples
 #' # annotation package name
@@ -108,12 +107,11 @@ biocann_pkgname <- function(x, noext=FALSE){
     res
     
 }
-#' \code{biocann_pkgobject} retrieve the \code{AnnotationDb} object for an annotation
+#' @describeIn annotation-tools retrieve the \code{AnnotationDb} object for an annotation
 #' package given as a string.
 #' The package does not need to be already loaded but needs to be installed in a library that 
 #' is in the search path.
 #' 
-#' @rdname annotation-tools
 #' @export
 #' @examples
 #' 
