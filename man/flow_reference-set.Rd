@@ -4,12 +4,12 @@
 \alias{flow_reference<-}
 \title{Change Reference Populations in Flowcytometry Data}
 \usage{
-flow_reference(x, ref, parent, ...) <- value
+flow_reference(x, parent, ...) <- value
 }
 \arguments{
 \item{x}{flow data}
 
-\item{ref}{indicates the reference population, that is either \code{'parent'} or
+\item{value}{indicates the reference population, that is either \code{'parent'} or
 \code{'total'}}
 }
 \description{

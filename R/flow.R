@@ -10,10 +10,10 @@
 #' Change Reference Populations in Flowcytometry Data
 #' 
 #' @param x flow data
-#' @param ref indicates the reference population, that is either \code{'parent'} or
+#' @param value indicates the reference population, that is either \code{'parent'} or
 #' \code{'total'}
 #' @export
-`flow_reference<-` <- function(x, ref, parent, ...){
+`flow_reference<-` <- function(x, parent, ..., value){
     UseMethod('flow_reference<-')
 }
 
