@@ -120,7 +120,7 @@ melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, va
 #' @export
 assayDataMelt <- function(object, elements = NULL, varnames = c("feature_id", "sample_id")){
   all_elements <- assayDataElementNames(object)
-  elements <- elements %||% all_elements
+  if( is.null(elements) ) elements <- all_elements
   assert_subset(elements, all_elements)
   assert_character(varnames, len = 2L, min.chars = 1L, unique = TRUE)
   
