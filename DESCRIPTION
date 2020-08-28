@@ -25,6 +25,7 @@ Imports:
     digest,
     BiocManager,
     assertthat
+    , checkmate
 Suggests:
     repotools,
     hgu133plus2.db,
@@ -46,5 +47,5 @@ Collate:
     'platforms.R'
     'plots.R'
     'stats.R'
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE, roclets = c('collate', 'namespace', 'roclets::rd2_roclet'))

@@ -99,3 +99,35 @@ melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, va
   df
   
 }
+
+
+#' Melting Assay Data
+#' 
+#' @param object an object with a suitable [Biobase::assayDataElement] method,
+#' typically an [Biobase::ExpressionSet-class] object
+#' @param elements an optional character vector that indicates the names of the 
+#' assay data elements to include in the result
+#' @param varnames a character vector with 2 unique elements that indicates the name of the columns
+#' that will hold the feature and sample names respectively.
+#' 
+#' @return a `data.frame` object with the following structure:
+#' 
+#'   * character columns `feature_id` and `sample_id` containing the feature and sample names respectively;
+#'   * other columns are numeric and correspond to each assay data element in the input object.
+#' 
+#' @importFrom checkmate assert_subset assert_character
+#' @importFrom reshape2 dcast
+#' @export
+assayDataMelt <- function(object, elements = NULL, varnames = c("feature_id", "sample_id")){
+  all_elements <- assayDataElementNames(object)
+  elements <- elements %||% all_elements
+  assert_subset(elements, all_elements)
+  assert_character(varnames, len = 2L, min.chars = 1L, unique = TRUE)
+  
+  df <- ldply(setNames(nm = elements), .id = "element", function(elt){
+    melt(assayDataElement(object, elt = elt), varnames = varnames, value.name = "value", as.is = TRUE)
+    
+  })
+  reshape2::dcast(df, feature_id + sample_id ~ element, value.var = "value")
+  
+}
