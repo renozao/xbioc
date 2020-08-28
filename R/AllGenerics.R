@@ -13,17 +13,14 @@ NULL
 #' \code{\link[Biobase]{featureNames}} and \code{\link[Biobase]{sampleNames}}, 
 #' that extend the original Bioconductor interface.
 #' 
-#' @inheritParams Biobase::featureNames
-#' 
-setGeneric('featureNames', package='Biobase')
+#' @name bioc-generic
+NULL
 
-setGeneric('featureNames<-', package='Biobase')
-
-#' @describeIn featureNames Returns the row names of \code{object}.
+#' @describeIn bioc-generic featureNames Returns the row names of \code{object}.
 #' @export
 setMethod('featureNames', 'matrix', function(object) rownames(object) )
 
-#' @describeIn featureNames Set the row names of \code{object}.
+#' @describeIn bioc-generic Set the row names of \code{object}.
 #' @export
 setReplaceMethod('featureNames', 'matrix', 
    function(object, value){
@@ -32,11 +29,7 @@ setReplaceMethod('featureNames', 'matrix',
    }
 )
 
-setGeneric('sampleNames', package='Biobase')
-
-setGeneric('sampleNames<-', package='Biobase')
-
-#' @describeIn featureNames Set the row names of \code{object}.
+#' @describeIn bioc-generic Set the row names of \code{object}.
 #' @aliases sampleNames,matrix,ANY
 #' @export
 setReplaceMethod('sampleNames', 'matrix', 
@@ -47,22 +40,18 @@ setReplaceMethod('sampleNames', 'matrix',
 )
 
 
-#' @describeIn featureNames Returns the column names of \code{object}.
+#' @describeIn bioc-generic Returns the column names of \code{object}.
 #' @export
 setMethod('sampleNames', 'matrix', function(object) colnames(object) )
 
-setGeneric('exprs', package = 'Biobase')
-
-#' @describeIn featureNames Simply returns \code{object}.
+#' @describeIn bioc-generic Simply returns \code{object}.
 #' This method is defined so the generic can be called on both matrix and 
 #' \code{ExpressionSet} objects.
 #' 
 #' @export
 setMethod('exprs', 'matrix', function(object) object )
 
-setGeneric('exprs<-', package = 'Biobase')
-
-#' @describeIn featureNames Simply assigns `value` to `object`.
+#' @describeIn bioc-generic Simply assigns `value` to `object`.
 #' This method is defined so the generic can be called on both matrix and 
 #' \code{ExpressionSet} objects.
 #' 
