@@ -8,29 +8,31 @@
 
 #' Handling Object Annotations
 #' 
-#' \code{hasAnnotation} tells if an object has some -- non empty -- attached annotation.
+#' Annotation utility functions.
 #' 
 #' @param object an object
 #' @param ... extra parameters (currently not used) 
 #' 
-#' @rdname annotation-utils
+#' @name annotation-utils
+NULL
+
+#' @describeIn annotation-utils tells if an object has some -- non empty -- attached annotation.
 #' @export
 hasAnnotation <- function(object, ...){
     !is.null( getAnnotation(object, ...) )
 }
-#' \code{getAnnotation} try extracting embedded annotations.
-#' By default, it returns \code{NULL} if the object contains no annotation.
+#' @describeIn annotation-utils try extracting embedded annotations.
 #'
-#' @rdname annotation-utils
 #' @export
 getAnnotation <- function(object, ...){
     UseMethod('getAnnotation')
 }
 
+#' @describeIn annotation-utils the default method returns \code{NULL} if the object contains 
+#' no annotation.
 #' @param null logical that indicates if an empty character string should 
 #' be return as \code{NULL}.
-#' @rdname annotation-utils
-#' @S3method getAnnotation default 
+#' @export
 getAnnotation.default <- function(object, ..., null=TRUE){
     ann <- if( hasMethod('annotation', class(object)) ) annotation(object)
             else attr(object, 'annotation')
@@ -39,7 +41,7 @@ getAnnotation.default <- function(object, ..., null=TRUE){
     ann
 }
 
-#' \code{setAnnotation} embbeds an annotation string into an object 
+#' @describeIn annotation-utils embbeds an annotation string into an object 
 #' (typically the name of an annotation package, e.g., \code{'hgu133plus2.db'}).
 #' 
 #' \code{setAnnotation} uses a suitable \code{annotation<-} method if it 
@@ -48,7 +50,6 @@ getAnnotation.default <- function(object, ..., null=TRUE){
 #'
 #' @param value new annotation string, e.g., \code{'hgu133plu2.db'}.
 #'  
-#' @rdname annotation-utils
 #' @export
 setAnnotation <- function(object, value, ...){
     UseMethod('setAnnotation')
@@ -58,7 +59,7 @@ setAnnotation <- function(object, value, ...){
 #' stored as an attribute, if no suitable \code{`annotation <-`} method is found.
 #'  
 #' @rdname annotation-utils
-#' @S3method setAnnotation default
+#' @export
 setAnnotation.default <- function(object, value, as.attribute = TRUE, ...){
     
     if( length(extras <- list(...)) ) 
@@ -78,7 +79,9 @@ setAnnotation.default <- function(object, value, as.attribute = TRUE, ...){
 }
 
 
-#' @S3method getAnnotation list
+#' @describeIn annotation-utils gets annotation for each element in a list of `ExpressionSet`
+#' objects. 
+#' @export
 getAnnotation.list <- function(object, ...){
     
     # handle list of ExpressionSet objects
@@ -89,8 +92,11 @@ getAnnotation.list <- function(object, ...){
     NextMethod()
 }
 
-
-#' @S3method setAnnotation list
+#' @describeIn annotation-utils set annotation on each element of a list of `ExpressionSet` objects.
+#' @param force single logical that indicates if the annotation string should be set
+#' even if the objects do not share the same original annotation.
+#' 
+#' @export
 setAnnotation.list <- function(object, value, force = FALSE, ...){
     
     # handle list of ExpressionSet objects
