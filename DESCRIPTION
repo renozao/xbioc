@@ -26,6 +26,7 @@ Imports:
     BiocManager,
     assertthat
     , checkmate
+    , utils
 Suggests:
     repotools,
     hgu133plus2.db,

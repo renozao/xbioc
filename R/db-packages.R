@@ -411,6 +411,7 @@ biocann_inp_pkgname <- function(x){
 #' @param provider name of the annotation provider
 #' 
 #' @importFrom BiocManager repositories
+#' @importFrom utils available.packages
 #' @export 
 #' 
 available_tx_db <- function(provider = c('all', 'ensembl', 'ucsc'), ...){
