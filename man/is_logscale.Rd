@@ -33,9 +33,6 @@ to control the extreme values that are removed.}
 \description{
 \code{is_logscale} tells if some numeric data is in log scale,
 e.g., normalized microarray data, using the same heuristic as GEO2R.
-
-\code{log_transform} apply a log transformation to the data.
-Negative values get assigned the value \code{\link{NaN}}.
 }
 \details{
 The data needs to be of reasonable size and variance for the detection
@@ -47,10 +44,6 @@ heuristic to work correctly.
 }}
 
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 x <- matrix(rnorm(20*10, mean=500), 20, 10)
 is_logscale(x)

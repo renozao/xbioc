@@ -42,10 +42,6 @@ via \code{\link{install.packages}} and load it.
 An error is thrown if this eventually fails.
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 # db package object
 biocann_object('hgu133plus2.db')

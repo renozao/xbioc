@@ -16,10 +16,6 @@ a list with names \code{x} mapping to NA values.
 Initialising a Mapping List
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 NAmap(letters[1:5])
 
 }

@@ -28,10 +28,6 @@ the original values in \code{x}.
 Converts Gene Alias to Official Gene Symbols
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 convertAlias(c('A', 'IL10'))
 convertAlias(c('A', 'IL-10', 'IL1RA'))

@@ -4,8 +4,11 @@
 \alias{geneInfo}
 \title{Simple Feature Annotation}
 \usage{
-geneInfo(x, annotation = "human", extras = c("biogps", "ncbi", "pathway",
-  "kegg"))
+geneInfo(
+  x,
+  annotation = "human",
+  extras = c("biogps", "ncbi", "pathway", "kegg")
+)
 }
 \arguments{
 \item{x}{feature identifiers to annotate}
@@ -26,10 +29,6 @@ and make ENTREZID and SYMBOL as links to the respective gene page.}
 Simple Feature Annotation
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 # Entrez IDs
 geneInfo(1:5)

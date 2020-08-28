@@ -32,10 +32,6 @@ organism.
 }}
 
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 # list all 
 biocann_orgdb()

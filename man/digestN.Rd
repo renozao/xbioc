@@ -21,10 +21,6 @@ a character vector of digest strings.
 Computing a Short Digest String
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 x <- list(1, 2, 3)
 digestN(x)

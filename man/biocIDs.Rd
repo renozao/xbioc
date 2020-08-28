@@ -20,9 +20,6 @@ is.probetype(type)
 \item{...}{extra arguments passed to \code{\link{idtype}}.}
 }
 \description{
-\code{is.idtype} tells if a given character vector contains valid types.
-
 \code{is.probeid} tells if given IDs are probe IDs.
-
-\code{is.probetype} tells if given types are probe ID types.
 }
+\concept{biocIDs}

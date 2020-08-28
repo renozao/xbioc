@@ -4,8 +4,7 @@
 \alias{samFDR}
 \title{Compute Permutation-based FDR as in SAM}
 \usage{
-samFDR(obs, perms, alternative = c("two.sided", "greater", "less"),
-  digit = 2)
+samFDR(obs, perms, alternative = c("two.sided", "greater", "less"), digit = 2)
 }
 \arguments{
 \item{obs}{observed statistics}

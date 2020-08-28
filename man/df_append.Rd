@@ -4,8 +4,13 @@
 \alias{df_append}
 \title{Appending Columns to Data Frames}
 \usage{
-df_append(x, ..., after = length(x), names = NULL,
-  stringsAsFactors = getOption("stringsAsFactors", FALSE))
+df_append(
+  x,
+  ...,
+  after = length(x),
+  names = NULL,
+  stringsAsFactors = getOption("stringsAsFactors", FALSE)
+)
 }
 \arguments{
 \item{x}{a \code{data.frame} object}
@@ -29,10 +34,6 @@ This function performs on \code{data.frame} objects a similar operation as
 That is it enables prepending/inserting/appending columns at specific positions.
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 
 x <- data.frame(a = 1:4, b = letters[1:4])
 # append at the end

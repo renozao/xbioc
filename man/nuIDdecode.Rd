@@ -28,19 +28,15 @@ This function is an adapted version of the \code{lumi::id2seq} from the
 It is used in \code{\link{idtype}} to infer the type of nuID vectors.
 }
 \examples{
-\dontshow{
-options(R_CHECK_RUNNING_EXAMPLES_=TRUE) ## roxygen generated flag
-}
-
 nuIDdecode('XERDqYYc2A')
 try(nuIDdecode('XERDqYYc2F'))
 nuIDdecode('XERDqYYc2F', error=FALSE)
 
 }
 \references{
-Du P, a Kibbe W and Lin SM (2007). “nuID: a universal naming scheme of oligonucleotides for illumina, affymetrix, and other
-microarrays.” \emph{Biology direct}, \emph{2}, pp. 16. ISSN 1745-6150, doi: 10.1186/1745-6150-2-16 (URL:
-http://doi.org/10.1186/1745-6150-2-16).
+Du P, a Kibbe W, Lin SM (2007). "nuID: a universal naming scheme of oligonucleotides for illumina, affymetrix, and
+other microarrays." _Biology direct_, *2*, 16. ISSN 1745-6150, doi: 10.1186/1745-6150-2-16 (URL:
+https://doi.org/10.1186/1745-6150-2-16).
 }
 \author{
 Pan Du

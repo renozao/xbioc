@@ -4,8 +4,14 @@
 \alias{melt.ExpressionSet}
 \title{Melt an ExpressionSet for Use with ggplot}
 \usage{
-\method{melt}{ExpressionSet}(data, ..., pData = pData(data), na.rm = FALSE,
-  value.name = "value", extra = list())
+\method{melt}{ExpressionSet}(
+  data,
+  ...,
+  pData = pData(data),
+  na.rm = FALSE,
+  value.name = "value",
+  extra = list()
+)
 }
 \arguments{
 \item{data}{an \code{ExpressionSet} object.}
