@@ -55,6 +55,7 @@ setMethod('pVar', signature(object = 'ExpressionSet'),
 #' @param extra list of other matrix-like data to melt and `rbind.fill` to the melted primary data.
 #' 
 #' @import reshape2
+#' @importFrom plyr rbind.fill 
 #' @export
 melt.ExpressionSet <- function(data, ..., pData = pData(data), na.rm = FALSE, value.name = "value", extra = list()){
   
